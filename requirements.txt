@@ -1,0 +1,18 @@
+flask>=3.0
+pillow>=10.0
+numpy>=1.26
+requests>=2.31
+gtts>=2.5
+imageio-ffmpeg>=0.5
+google-api-python-client>=2.120
+google-auth-oauthlib>=1.2
+edge-tts>=7.0
+yt-dlp>=2025.0
+# Objaverse integration
+objaverse>=0.1.4
+huggingface_hub>=0.23.0
+deep_translator>=1.11.0
+# NOTE : ne PAS ajouter de contrainte "click" ici.
+# gTTS impose click<8.2 tandis qu'un plancher click>=8.3.3 bloquerait toute l'installation.
+# Detail : la faille click (PYSEC-2026-2132) ne touche que le CLI Flask, non expose par l'app web.
+# Voir AUDIT_SECURITE.md (V10). Surveiller : pip-audit -r requirements.txt

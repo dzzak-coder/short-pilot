@@ -1,0 +1,68 @@
+--- image_01 (scene 1, site:plateau_de_gizeh, EXT) ---
+A realistic documentary photograph in a vertical 9:16 composition of the Giza plateau, sandy desert with pyramids in the background, Ancient Egypt, near Cairo, open desert under harsh dry sunlight, pale limestone and sand tones. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: wide establishing shot.
+
+--- image_02 (scene 2, construction_part:stone_courses, EXT) ---
+A realistic documentary photograph in a vertical 9:16 composition of the large horizontal courses of limestone masonry, Ancient Egypt, near Cairo, open desert under harsh dry sunlight, pale limestone and sand tones. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium shot, low angle, raking light.
+
+--- image_03 (scene 3, construction_part:socle_rocheux, EXT) ---
+A realistic documentary photograph in a vertical 9:16 composition of the bedrock foundation the pyramid was built on, Ancient Egypt, near Cairo, open desert under harsh dry sunlight, pale limestone and sand tones. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium shot, low angle.
+
+--- image_04 (scene 4, structure:main:pyramide_de_kheops, EXT) ---
+A realistic documentary photograph in a vertical 9:16 composition, a massive stepped stone pyramid, the largest of the three, Ancient Egypt, near Cairo, open desert under harsh dry sunlight, pale limestone and sand tones. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: wide establishing shot.
+
+--- image_05 (scene 4, construction_part:voute, INT) ---
+A realistic documentary photograph in a vertical 9:16 composition of a corbelled stone vault ceiling, deep inside the Great Pyramid of Khufu, ancient limestone and granite masonry, dim ambient light, dust in the air. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium shot, looking up at the corbelled vault.
+
+--- image_06 (scene 5, material:blocs_de_pierre, EXT) ---
+A realistic documentary photograph in a vertical 9:16 composition of huge rough-cut limestone blocks, Ancient Egypt, near Cairo, open desert under harsh dry sunlight, pale limestone and sand tones. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium shot, shallow depth of field.
+
+--- image_07 (scene 6, material:granite_blocks, EXT) ---
+A realistic documentary photograph in a vertical 9:16 composition of polished rose granite blocks, Ancient Egypt, near Cairo, open desert under harsh dry sunlight, pale limestone and sand tones. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: close-up, shallow depth of field.
+
+--- image_08 (scene 7, site:roche_naturelle, EXT) ---
+A realistic documentary photograph in a vertical 9:16 composition of the natural limestone bedrock outcrop, Ancient Egypt, near Cairo, open desert under harsh dry sunlight, pale limestone and sand tones. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium shot.
+
+--- image_09 (scene 7, opening:puits, INT) ---
+A realistic documentary photograph in a vertical 9:16 composition of a vertical shaft cut down through bedrock, deep inside the Great Pyramid of Khufu, ancient limestone and granite masonry, dim ambient light, dust in the air. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium shot, looking down into the shaft.
+
+--- image_10 (scene 8, mechanism:herses_de_fermeture, INT) ---
+A realistic documentary photograph in a vertical 9:16 composition of heavy granite portcullis slabs blocking a passage, deep inside the Great Pyramid of Khufu, ancient limestone and granite masonry, dim ambient light, dust in the air. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: close-up detail shot, low angle.
+
+--- image_11 (scene 9, opening:entree, EXT) ---
+A realistic documentary photograph in a vertical 9:16 composition of the original stone entrance passage of the pyramid, Ancient Egypt, near Cairo, open desert under harsh dry sunlight, pale limestone and sand tones. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium shot, from outside toward the opening.
+
+--- image_12 (scene 9, opening:ouverture, INT) ---
+A realistic documentary photograph in a vertical 9:16 composition of a narrow forced tunnel opening cut through masonry, deep inside the Great Pyramid of Khufu, ancient limestone and granite masonry, dim ambient light, dust in the air. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium shot, looking into a rough forced tunnel.
+
+--- image_13 (scene 10, structure:main:pyramide_de_kheops, EXT) ---
+A realistic documentary photograph in a vertical 9:16 composition, a massive stepped stone pyramid, the largest of the three, Ancient Egypt, near Cairo, open desert under harsh dry sunlight, pale limestone and sand tones. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: wide establishing shot, elevated three-quarter view.
+
+--- image_14 (scene 11, passage:corridor, INT) ---
+A realistic documentary photograph in a vertical 9:16 composition of a narrow stone passageway cut through limestone masonry, deep inside the Great Pyramid of Khufu, ancient limestone and granite masonry, dim ambient light, dust in the air. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium shot, leading lines into darkness.
+
+--- image_15 (scene 11, construction_part:mur, INT) ---
+A realistic documentary photograph in a vertical 9:16 composition of a rough stone wall inside the pyramid, deep inside the Great Pyramid of Khufu, ancient limestone and granite masonry, dim ambient light, dust in the air. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium shot, low angle, raking light.
+
+--- image_16 (scene 12, opening:niche, INT) ---
+A realistic documentary photograph in a vertical 9:16 composition of a carved stone niche in a chamber wall, deep inside the Great Pyramid of Khufu, ancient limestone and granite masonry, dim ambient light, dust in the air. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium shot, facing the niche squarely.
+
+--- image_17 (scene 13, opening:niche, INT) ---
+A realistic documentary photograph in a vertical 9:16 composition of a carved stone niche in a chamber wall, deep inside the Great Pyramid of Khufu, ancient limestone and granite masonry, dim ambient light, dust in the air. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium close shot, side angle revealing the niche depth.
+
+--- image_18 (scene 14, artifact:sarcophage, INT) ---
+A realistic documentary photograph in a vertical 9:16 composition of the empty granite sarcophagus in the burial chamber, deep inside the Great Pyramid of Khufu, ancient limestone and granite masonry, dim ambient light, dust in the air. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: close-up detail shot, slightly above.
+
+--- image_19 (scene 15, mechanism:systeme_de_decharge, INT) ---
+A realistic documentary photograph in a vertical 9:16 composition of the relieving chambers built above the King's Chamber, deep inside the Great Pyramid of Khufu, ancient limestone and granite masonry, dim ambient light, dust in the air. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: wide shot, confined space, ceiling of stacked granite.
+
+--- image_20 (scene 16, room:chambre_funeraire, INT) ---
+A realistic documentary photograph in a vertical 9:16 composition of the granite burial chamber, deep inside the Great Pyramid of Khufu, ancient limestone and granite masonry, dim ambient light, dust in the air. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium wide shot, symmetrical framing.
+
+--- image_21 (scene 17, room:chambre_de_decharge, INT) ---
+A realistic documentary photograph in a vertical 9:16 composition of a relieving chamber above the King's Chamber, deep inside the Great Pyramid of Khufu, ancient limestone and granite masonry, dim ambient light, dust in the air. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: medium wide shot, low ceiling pressing down.
+
+--- image_22 (scene 18, structure:main:pyramide_de_kheops, EXT) ---
+A realistic documentary photograph in a vertical 9:16 composition, a massive stepped stone pyramid, the largest of the three, Ancient Egypt, near Cairo, open desert under harsh dry sunlight, pale limestone and sand tones. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: wide establishing shot, low horizon, pyramid off-centre.
+
+--- image_23 (scene 19, artifact:inscriptions, INT) ---
+A realistic documentary photograph in a vertical 9:16 composition of red ochre quarry marks painted on stone blocks, deep inside the Great Pyramid of Khufu, ancient limestone and granite masonry, dim ambient light, dust in the air. Documentary photograph, 35mm, natural colour, fine grain, no text, no people. Camera framing: close-up detail shot, raking light on painted marks.

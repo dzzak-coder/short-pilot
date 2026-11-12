@@ -1,0 +1,36 @@
+﻿# --- secrets : jamais ---
+.env
+*.env
+*token*.json
+*tokens*.json
+*secret*
+*credential*
+*.pem
+*.key
+tools/n8n/
+
+# --- artefacts lourds ---
+outputs/
+*.mp4
+*.wav
+*.mp3
+*.png
+*.jpg
+*.jpeg
+*.safetensors
+*.ckpt
+*.bin
+
+# --- dépendances et caches ---
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+studio3d/
+
+# --- éditeurs ---
+.idea/
+.vscode/
+*.bak*

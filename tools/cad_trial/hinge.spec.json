@@ -1,0 +1,15 @@
+{
+  "title": "CHARNIÈRE — ESSAI CAO À QUATRE PIÈCES",
+  "root": "leaf_left",
+  "parts": [
+    {"id": "leaf_left", "name": "Aile gauche — trois charnons", "factory": "hinge_leaf", "parameters": {"side": "left"}, "stage": "foundation"},
+    {"id": "leaf_right", "name": "Aile droite — deux charnons", "factory": "hinge_leaf", "parameters": {"side": "right"}, "stage": "structure"},
+    {"id": "pin", "name": "Axe traversant", "factory": "hinge_pin", "parameters": {}, "stage": "mechanism"},
+    {"id": "washer", "name": "Rondelle de retenue", "factory": "washer", "parameters": {}, "stage": "finishes"}
+  ],
+  "mates": [
+    {"parent": "leaf_left", "parent_port": "axis", "child": "leaf_right", "child_port": "axis"},
+    {"parent": "leaf_left", "parent_port": "axis", "child": "pin", "child_port": "axis"},
+    {"parent": "leaf_left", "parent_port": "axis", "child": "washer", "child_port": "seat"}
+  ]
+}

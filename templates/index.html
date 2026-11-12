@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚡%3C/text%3E%3C/svg%3E">
+<title>ShortPilot ⚡ Studio de vidéos courtes</title>
+<style>
+  :root{--bg:#0a0c12;--card:#131826;--card2:#0e1220;--line:#232b41;--txt:#e8ecf5;--mut:#8b94ad;
+        --acc:#7c5cff;--acc2:#22d3ee;--ok:#34d399;--err:#f87171;--warn:#fbbf24}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font:15px/1.55 system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+  header{padding:26px 20px 10px;text-align:center}
+  h1{font-size:30px;letter-spacing:.5px}
+  h1 .bolt{background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--mut);margin-top:4px}
+  .aibadge{display:inline-block;margin-top:10px;padding:6px 16px;border-radius:999px;font-size:13.5px;font-weight:600;
+       color:#d8ccff;background:rgba(124,92,255,.12);border:1px solid var(--acc)}
+  nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px auto 6px;max-width:1100px;padding:0 16px}
+  nav button{background:var(--card);border:1px solid var(--line);color:var(--txt);padding:10px 18px;border-radius:12px;cursor:pointer;font-size:15px;font-weight:600}
+  nav button.on{background:linear-gradient(90deg,var(--acc),var(--acc2));color:#fff;border:none}
+  main{max-width:1100px;margin:14px auto 60px;padding:0 16px}
+  .tab{display:none}
+  .tab.on{display:block}
+  body.studio3d-open{height:100dvh;overflow:hidden;display:flex;flex-direction:column}
+  body.studio3d-open>header{padding:8px 16px 0;flex:none}
+  body.studio3d-open>header h1{font-size:20px}
+  body.studio3d-open>header .sub,body.studio3d-open>header .aibadge{display:none}
+  body.studio3d-open>nav{flex:none;margin:8px 0;width:100%;max-width:none}
+  body.studio3d-open>nav button{padding:8px 12px;font-size:13px}
+  body.studio3d-open main{flex:1;min-height:0;max-width:none;width:100%;margin:0;padding:0 10px 10px;display:flex}
+  #tab-studio3d.on{display:flex;flex-direction:column;flex:1;min-width:0;min-height:0;gap:8px}
+  #tab-studio3d>.card{flex:none;padding:10px 14px;margin:0}
+  #tab-studio3d .card h2{font-size:16px}
+  #tab-studio3d .card .btn{padding:7px 12px;font-size:13px}
+  #studio3d-help{display:none}
+  #studio3d-frame{display:block;flex:1;min-height:0;width:100%;height:0;border:1px solid var(--line);border-radius:12px;background:#041022}
+  #studio3d-status{min-height:1.5em}
+  button:focus-visible,a:focus-visible{outline:2px solid var(--acc2);outline-offset:4px}
+  @media(max-width:600px){body.studio3d-open>header{display:none}body.studio3d-open>nav{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding:0 8px}body.studio3d-open>nav button{white-space:nowrap} #studio3d-status{font-size:11px} #tab-studio3d .card h2{width:100%}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}
+  .card h2{font-size:18px;margin-bottom:12px}
+  .grid{display:grid;gap:12px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}.g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  label{display:block;font-size:12.5px;color:var(--mut);margin-bottom:4px;text-transform:uppercase;letter-spacing:.6px}
+  select,input[type=text],input[type=time],input[type=url],textarea{width:100%;background:var(--card2);border:1px solid var(--line);color:var(--txt);
+     border-radius:10px;padding:10px 12px;font-size:15px}
+  textarea{resize:vertical;min-height:70px;font-family:inherit}
+  input[type=checkbox]{width:18px;height:18px;accent-color:var(--acc);vertical-align:-3px}
+  .btn{background:linear-gradient(90deg,var(--acc),var(--acc2));border:none;color:#fff;font-weight:700;font-size:16px;
+       padding:12px 22px;border-radius:12px;cursor:pointer}
+  .btn.sec{background:var(--card2);border:1px solid var(--line)}
+  .btn.warn{background:linear-gradient(90deg,#f59e0b,#ef4444)}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .muted{color:var(--mut);font-size:13px}
+  .pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;border:1px solid var(--line)}
+  .pill.ok{color:var(--ok);border-color:var(--ok)} .pill.err{color:var(--err);border-color:var(--err)} .pill.warn{color:var(--warn);border-color:var(--warn)}
+  .log{background:#07090f;border:1px solid var(--line);border-radius:12px;padding:12px;font:12.5px/1.7 ui-monospace,Menlo,Consolas,monospace;
+       max-height:220px;overflow:auto;white-space:pre-wrap;color:#aab4cf}
+  video{width:100%;max-width:340px;border-radius:14px;border:1px solid var(--line);background:#000;display:block;margin:0 auto}
+  .libgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+  .item{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:10px}
+  .item .cap{font-size:13px;color:var(--mut)}
+  .chk{display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+  .steps{font-size:13.5px;color:var(--mut);padding-left:18px}
+  .steps li{margin:5px 0}
+  code{background:#07090f;padding:2px 7px;border-radius:6px;font-size:12.5px;color:#9ecbff}
+  .jobcard{border:1px dashed var(--line);border-radius:14px;padding:14px;margin-top:12px}
+  .right{margin-left:auto}
+  hr{border:none;border-top:1px solid var(--line);margin:16px 0}
+  .kbd{font:12px ui-monospace,monospace;background:#07090f;border:1px solid var(--line);padding:1px 6px;border-radius:6px}
+  .card2{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:14px}
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="bolt">⚡ ShortPilot</span> — Studio de vidéos courtes</h1>
+  <div class="sub">Créez, montez et publiez des Shorts, Reels & TikToks depuis un script.</div>
+  <div class="aibadge">Images locales ComfyUI · vidéos animées contrôlées scène par scène</div>
+</header>
+<nav>
+  <button data-tab="create" class="on">🎬 Créer</button>
+  <button data-tab="studio3d"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="vertical-align:-3px"><path d="m12 2 9 5v10l-9 5-9-5V7zM3 7l9 5 9-5M12 12v10"/></svg> Studio 3D</button>
+  <button data-tab="yt">📺 Sources autorisées → Shorts</button>
+  <button data-tab="library">🗂️ Bibliothèque <span id="libcount" class="pill">0</span></button>
+  <button data-tab="publish">📤 Publication</button>
+  <button data-tab="settings">🤖 Pilote auto & Réglages</button>
+</nav>
+
+<main>
+<section id="tab-studio3d" class="tab" aria-label="Studio de creation 3D">
+  <div class="card">
+    <div class="row">
+      <h2 style="margin:0">Studio 3D · HoloForge</h2>
+      <button class="btn" id="studio3d-send">Utiliser le script ShortPilot</button>
+      <button class="btn sec" onclick="showTab('library')">Ouvrir la bibliothèque</button>
+    </div>
+    <p id="studio3d-help" class="muted">Les exports 3D de 20 secondes à 3 minutes rejoignent la bibliothèque.</p>
+    <p id="studio3d-status" class="muted" role="status" aria-live="polite">Le studio se charge à l’ouverture de cet onglet.</p>
+  </div>
+  <iframe id="studio3d-frame" title="HoloForge — studio 3D intégré" allow="autoplay; fullscreen" allowfullscreen></iframe>
+</section>
+<!-- ================= CRÉER ================= -->
+<section id="tab-create" class="tab on">
+  <div class="card">
+    <h2>1 · Contenu</h2>
+    <span id="voicepill" class="pill warn">Voix IA : vérification…</span>
+    <div class="grid g4" style="margin-top:12px">
+      <div><label>Niche</label><select id="niche"></select></div>
+      <div><label>Langue</label><select id="lang"><option value="fr">🇫🇷 Français</option><option value="en">🇬🇧 English</option></select></div>
+      <div><label>Durée cible</label><select id="duration"></select></div>
+      <div><label id="topiclabel">Sujet ou filtre (facultatif)</label><input type="text" id="topic" placeholder="Ex : les chats, le trading…"></div>
+      <div><label>♾️ Source du script</label>
+        <select id="csource">
+          <option value="web">🌐 Web — contenu infini (Wikipedia, citations…)</option>
+          <option value="local">🎲 Banque locale — instantanée, hors-ligne</option></select></div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="genscriptbtn" onclick="genScript()">✨ Générer un script</button>
+      <span class="muted">Le script est entièrement éditable avant le rendu.</span>
+      <span id="srcnote" class="muted"></span>
+      <button class="btn secondary" id="sustainableDurationBtn" style="display:none"></button>
+    </div>
+    <div class="grid g2" style="margin-top:14px">
+      <div>
+        <label>Titre (hook visible)</label>
+        <input type="text" id="s_title" placeholder="Généré automatiquement">
+      </div>
+      <div>
+        <label>Légende + hashtags (pour la publication)</label>
+        <textarea id="s_caption" rows="2"></textarea>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <label>Scènes — une ligne = un plan visuel et une action (1ʳᵉ ligne = accroche, dernière = appel à l’action)</label>
+      <textarea id="s_scenes" rows="8" placeholder="Une action visuelle par ligne : « Léa ouvre la porte », puis « Léa entre dans la pièce »."></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2 · Style & Audio</h2>
+    <div class="grid g4">
+      <div><label>🖼️ Visuels</label>
+        <select id="visuals">
+          <option value="comfy">🖥️ Images locales directes — ComfyUI / KSampler, sans clé API</option>
+          <option value="comfy_quality">✨ Images locales qualité — ComfyUI complet, plus lent</option>
+          <option value="motion">🎬 Images animées gratuites — ComfyUI + mouvements de montage</option>
+          <option value="images">📷 Photos réelles CC (base libre, vérifie le thème)</option>
+          <option value="theme">🎨 Arrière-plans graphiques (thème ci-dessous)</option>
+        </select></div>
+      <div><label>Thème visuel</label><select id="style"></select></div>
+      <div><label>Musique</label><select id="music"></select></div>
+      <div><label>🎙️ Voix off</label><select id="voiceid"></select></div>
+      <div><label>Qualité</label><select id="quality"><option value="1080">1080×1920 (Full HD)</option><option value="720">720×1280 (plus rapide)</option></select></div>
+    </div>
+    <p id="visualnote" class="muted" style="margin-top:8px" aria-live="polite"></p>
+    <div class="row" style="margin-top:14px">
+      <label class="chk" style="border:none;background:none;padding:0"><input type="checkbox" id="voice" checked> Voix off IA activée</label>
+      <div style="flex:1;min-width:220px"><label>Filigrane (votre @pseudo)</label><input type="text" id="watermark" placeholder="@MonCompte"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>3 · Production</h2>
+    <div class="row">
+      <button class="btn" id="renderbtn" onclick="doRender()">🎥 Générer la vidéo</button>
+      <button class="btn sec" onclick="sendScriptTo3d()">Créer en 3D</button>
+      <label class="chk" style="border:none;background:none;padding:0"><input type="checkbox" id="autopub"> Publier automatiquement après le rendu</label>
+    </div>
+    <div id="jobbox" class="jobcard" style="display:none">
+      <div class="row"><b id="jobstatus">⏳ En file…</b><span class="right muted" id="jobid"></span></div>
+      <div class="log" id="joblog" style="margin-top:10px"></div>
+      <div id="jobresult" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>⚡ Mode Batch — une semaine de contenu en 1 clic</h2>
+    <div class="grid g3">
+      <div><label>Nombre de vidéos</label><input type="text" id="b_count" value="7"></div>
+      <div><label>Niches (mélange aléatoire)</label>
+        <div id="b_niches" class="grid g2"></div>
+      </div>
+      <div><label>&nbsp;</label><button class="btn warn" onclick="doBatch()">🚀 Lancer le batch</button></div>
+    </div>
+    <div id="batchbox" class="jobcard" style="display:none"><div class="log" id="batchlog"></div></div>
+  </div>
+</section>
+
+<!-- ================= YOUTUBE → SHORTS ================= -->
+<section id="tab-yt" class="tab">
+  <div class="card">
+    <h2>📺 Transformer une longue vidéo en Shorts</h2>
+    <p class="muted">Utilisez un fichier local obtenu légalement <b>ou</b> une vidéo YouTube qui vous appartient ou pour laquelle vous avez une autorisation explicite de téléchargement et de réutilisation. ShortPilot la reformate en 9:16 avec sous-titres stylés.</p>
+    <div class="row" style="margin-top:12px">
+      <label class="chk"><input type="radio" name="yt_mode" value="url" checked onchange="ytMode()"> 🔗 Lien YouTube</label>
+      <label class="chk"><input type="radio" name="yt_mode" value="file" onchange="ytMode()"> 📁 Fichier local (MP4, MOV…)</label>
+    </div>
+    <div id="yt_box_url" class="row" style="margin-top:12px">
+      <input type="url" id="yt_url" placeholder="https://www.youtube.com/watch?v=…" style="flex:1;min-width:280px">
+      <button class="btn sec" id="yt_anbtn" onclick="ytInfo()">🔍 Analyser</button>
+    </div>
+    <label id="yt_rights_row" class="chk" style="display:flex;margin-top:10px">
+      <input type="checkbox" id="yt_rights_confirmed"> Je confirme que cette vidéo YouTube m'appartient ou que j'ai l'autorisation de la télécharger et de la réutiliser.
+    </label>
+    <div id="yt_box_file" style="display:none;margin-top:12px">
+      <div class="grid g2">
+        <div><label>Fichier vidéo</label><input type="file" id="yt_file" accept="video/mp4,video/quicktime,video/x-matroska,video/webm,.mp4,.mov,.mkv,.webm,.m4v,.avi"></div>
+        <div><label>Sous-titres (optionnel, .srt/.vtt)</label><input type="file" id="yt_file_subs" accept=".srt,.vtt"></div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn sec" id="yt_upbtn" onclick="ytUpload()">⬆️ Envoyer la vidéo</button>
+        <span id="yt_upstate" class="muted">Aucun fichier envoyé.</span>
+      </div>
+    </div>
+    <div id="yt_info" style="display:none;margin-top:14px" class="card2"></div>
+  </div>
+
+  <div class="card">
+    <h2>⚙️ Options de découpe</h2>
+    <div class="grid g4">
+      <div><label>Nombre de shorts</label>
+        <select id="yt_count"><option value="0">Auto (selon la durée)</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="8">8</option><option value="10">10</option></select></div>
+      <div><label>Durée par short</label>
+        <select id="yt_duration"><option value="20">~20 s</option><option value="30" selected>~30 s</option><option value="45">~45 s</option><option value="60">~60 s</option><option value="90">~1 min 30</option><option value="120">~2 min</option><option value="180">~3 min</option><option value="240">~4 min</option><option value="300">~5 min</option></select></div>
+      <div><label>Cadrage</label>
+        <select id="yt_framing"><option value="blur">Fond flouté (recommandé)</option><option value="center">Recadrage centré</option></select></div>
+      <div><label>&nbsp;</label>
+        <label class="chk"><input type="checkbox" id="yt_subs" checked> Sous-titres dynamiques</label></div>
+    </div>
+    <div class="grid g2" style="margin-top:12px">
+      <div><label>📐 Format de la vidéo source</label>
+        <select id="yt_srcformat">
+          <option value="auto">🔍 Détection automatique (recommandé)</option>
+          <option value="landscape">🖥️ 16:9 Paysage (podcast, conférence…)</option>
+          <option value="classic">📺 4:3 Classique (ancienne caméra, TV)</option>
+          <option value="square">⬛ 1:1 Carré</option>
+          <option value="vertical">📱 9:16 Portrait (déjà verticale — aucun reformatage)</option>
+        </select></div>
+      <div><label>&nbsp;</label>
+        <p class="muted" style="margin:0;padding-top:9px">Votre vidéo n'est pas en 16:9 ? Aucun souci :
+        elle est d'abord mise au bon format — portrait → plein cadre natif, carré/4:3 → fond flouté,
+        paysage → flouté ou recadrage (ci-dessus). La détection est automatique.</p></div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <div style="flex:1;min-width:220px"><label>Filigrane (votre @pseudo)</label><input type="text" id="yt_watermark" placeholder="@MonCompte"></div>
+      <button class="btn" id="yt_gobtn" onclick="ytGo()">✂️ Générer les Shorts</button>
+    </div>
+    <div id="yt_jobbox" class="jobcard" style="display:none">
+      <div class="row"><b id="yt_jobstatus">⏳ En file…</b><span class="right muted" id="yt_jobid"></span></div>
+      <div class="log" id="yt_joblog" style="margin-top:10px"></div>
+      <div id="yt_jobresult" class="libgrid" style="margin-top:12px"></div>
+    </div>
+    <p class="muted" style="margin-top:12px">⚠️ Les sources acceptées sont vos vidéos, celles dont vous avez l'autorisation, et les fichiers locaux obtenus légalement. YouTube Premium permet la lecture hors connexion dans l'application YouTube ; il ne fournit pas un fichier vidéo pour le montage. Utilisez le mode <b>📁 Fichier local</b> lorsque vous disposez légalement du fichier.</p>
+  </div>
+</section>
+
+<!-- ================= BIBLIOTHÈQUE ================= -->
+<section id="tab-library" class="tab">
+  <div class="card">
+    <div class="row"><h2 style="margin:0">Vos vidéos</h2>
+      <button class="btn sec right" onclick="loadLibrary()">↻ Actualiser</button></div>
+    <hr>
+    <div class="libgrid" id="libgrid"><div class="muted">Aucune vidéo pour l'instant. Créez-en une !</div></div>
+  </div>
+</section>
+
+<!-- ================= PUBLICATION ================= -->
+<section id="tab-publish" class="tab">
+  <div class="card">
+    <h2>🎯 Cible de publication automatique</h2>
+    <div class="row">
+      <label><input type="radio" name="ptarget" value="webhook"> Webhook (TikTok / Reels / tout) — recommandé</label>
+      <label><input type="radio" name="ptarget" value="youtube"> YouTube direct (API officielle)</label>
+      <button class="btn sec" onclick="savePub()">💾 Enregistrer</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🪝 Webhook universel <span class="muted">(le plus simple pour TikTok & Instagram)</span></h2>
+    <p class="muted">Sans API compliquée : l'outil envoie la vidéo + la légende à votre scénario
+      <b>Make.com</b>, <b>Zapier</b> ou <b>n8n</b>, qui publie ensuite sur TikTok, Instagram Reels, YouTube, LinkedIn…</p>
+    <ol class="steps">
+      <li>Créez un scénario sur <code>make.com</code> : déclencheur <b>« Webhook personnalisé »</b>, puis module <b>TikTok / Instagram / YouTube → Upload video</b>.</li>
+      <li>Collez l'URL du webhook ci-dessous, testez, activez. C'est tout.</li>
+    </ol>
+    <div class="row" style="margin-top:10px">
+      <input type="url" id="webhook" placeholder="https://hook.make.com/xxxxxxxxxxxx" style="flex:1;min-width:260px">
+      <button class="btn sec" onclick="savePub()">💾 Enregistrer</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>▶️ YouTube (API officielle) <span id="ytpill" class="pill warn">…</span></h2>
+    <ol class="steps">
+      <li>Sur <code>console.cloud.google.com</code> : créez un projet, activez <b>YouTube Data API v3</b>.</li>
+      <li>Écran de consentement OAuth → « Externe », créez un identifiant <b>OAuth → Application Web</b> avec l'URI de redirection <code>http://localhost:8099/</code>.</li>
+      <li>Téléchargez le JSON et placez-le ici : <code>data/client_secrets.json</code>.</li>
+      <li>À la 1ʳᵉ publication, une fenêtre Google s'ouvre pour autoriser l'application. Les vidéos portant <code>#Shorts</code> sont classées Short automatiquement.</li>
+    </ol>
+    <div class="row" style="margin-top:10px">
+      <label>Confidentialité : <select id="ytprivacy" style="width:auto;display:inline-block"><option value="public">Publique</option><option value="unlisted">Non répertoriée</option><option value="private">Privée</option></select></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✋ Publication manuelle assistée <span class="muted">(30 secondes chrono)</span></h2>
+    <p class="muted">Bibliothèque → bouton <b>📋 Légende</b> (copie titre + texte + hashtags) → <b>⬇️</b> (télécharge le MP4) → collez dans TikTok / Reels / Shorts depuis votre téléphone.</p>
+  </div>
+</section>
+
+<!-- ================= RÉGLAGES ================= -->
+<section id="tab-settings" class="tab">
+  <div class="card">
+    <h2>🤖 Pilote automatique <span id="appill" class="pill warn">…</span></h2>
+    <p class="muted">Génère (et publie, si activé) des vidéos chaque jour aux heures choisies, tant que l'outil tourne.</p>
+    <div class="row" style="margin:10px 0">
+      <label class="chk" style="border:none;background:none"><input type="checkbox" id="ap_enabled"> Activer le pilote automatique</label>
+      <label class="chk" style="border:none;background:none"><input type="checkbox" id="ap_autopub"> + Publier automatiquement</label>
+    </div>
+    <div class="grid g3">
+      <div><label>Langue</label><select id="ap_lang"><option value="fr">🇫🇷 Français</option><option value="en">🇬🇧 English</option></select></div>
+      <div><label>Heure 1</label><input type="time" id="ap_t1" value="09:00"></div>
+      <div><label>Heure 2 (optionnel)</label><input type="time" id="ap_t2" value="18:30"></div>
+    </div>
+    <label style="margin-top:12px">Niches mélangées :</label>
+    <div id="ap_niches" class="grid g4"></div>
+    <div class="row" style="margin-top:14px"><button class="btn" onclick="saveAp()">💾 Enregistrer le pilote auto</button></div>
+  </div>
+
+  <div class="card">
+    <h2>⚙️ Réglages par défaut</h2>
+    <div class="grid g3">
+      <div><label>Filigrane par défaut</label><input type="text" id="d_watermark"></div>
+      <div><label>🖼️ Visuels par défaut</label>
+        <select id="d_visuals">
+          <option value="comfy">🖥️ Images locales directes — ComfyUI / KSampler</option>
+          <option value="comfy_quality">✨ Images locales qualité — ComfyUI complet</option>
+          <option value="motion">🎬 Images animées gratuites — ComfyUI + montage</option>
+          <option value="images">📷 Photos réelles CC</option>
+          <option value="theme">🎨 Arrière-plans graphiques</option>
+        </select></div>
+      <div><label>♾️ Source des scripts</label>
+        <select id="d_csource">
+          <option value="web">🌐 Web — contenu infini</option>
+          <option value="local">🎲 Banque locale</option></select></div>
+      <div><label>Thème par défaut</label><select id="d_style"></select></div>
+      <div><label>Musique par défaut</label><select id="d_music"></select></div>
+      <div><label>🎙️ Voix par défaut</label><select id="d_voiceid"></select></div>
+      <div><label>Durée par défaut</label><select id="d_duration"></select></div>
+      <div><label>🖥️ ComfyUI local — adresse du serveur</label><input type="text" id="d_comfyurl" placeholder="http://127.0.0.1:8188"></div>
+      <div><label>🖥️ Checkpoint ComfyUI (vide = auto)</label><input type="text" id="d_comfyckpt" placeholder="ex : sd_xl_turbo_1.0_fp16.safetensors"></div>
+    </div>
+    <div class="muted" id="comfynote" style="margin-top:10px" aria-live="polite">Vérification de ComfyUI…</div>
+    <div class="muted" id="qualitynote" style="margin-top:6px" aria-live="polite"></div>
+    <div class="row" style="margin-top:14px"><button class="btn sec" onclick="saveDefaults()">💾 Enregistrer</button></div>
+  </div>
+
+  <div class="card">
+    <h2>🍪 Accès à vos vidéos YouTube autorisées</h2>
+    <p class="muted">Si YouTube demande une connexion pour une vidéo qui vous appartient ou vous est autorisée,
+      choisissez un navigateur déjà connecté au compte qui y a accès.</p>
+    <ol class="steps">
+      <li><b>Sur votre PC</b> : sélectionnez le navigateur connecté au compte qui a accès à cette source autorisée.</li>
+      <li>N'utilisez pas cet accès pour contourner les restrictions de YouTube ou récupérer des vidéos de tiers.</li>
+    </ol>
+    <div class="row" style="margin-top:10px">
+      <label>Navigateur à utiliser :
+        <select id="cookies_browser" style="width:auto;display:inline-block">
+          <option value="">Aucun (défaut)</option><option value="firefox">Firefox</option>
+          <option value="chrome">Chrome</option><option value="chromium">Chromium</option>
+          <option value="edge">Edge</option><option value="brave">Brave</option>
+        </select></label>
+      <span id="cookiespill" class="pill warn"></span>
+      <button class="btn sec" onclick="saveCookies()">💾 Enregistrer</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📚 Enrichir le contenu</h2>
+    <p class="muted">Ajoutez vos propres accroches / faits / astuces dans <code>data/content_extra.json</code> (même structure que la base, voir le README). Ils seront mélangés au contenu intégré sans rien coder.</p>
+    <p class="muted" style="margin-top:8px">Historique anti-répétition : <code>data/used.json</code> — supprimez-le pour réinitialiser la mémoire.</p>
+  </div>
+</section>
+</main>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+let CFG=null, POLL=null, BPOLL=null;
+let SP_TOKEN=localStorage.getItem('sp_token')||'';
+let SCRIPT_VISUAL_PLANS=[];
+let SCRIPT_VISUAL_CONTROLS=[];
+let SCRIPT_VISUAL_FINGERPRINT='';
+let SCRIPT_NICHE='';
+const PUB_PENDING=new Set(), PUB_STATUS={};
+
+async function api(u,o){
+  o=o||{}; o.headers=Object.assign({},o.headers||{});
+  if(SP_TOKEN)o.headers['X-ShortPilot-Token']=SP_TOKEN;
+  let r=await fetch(u,o);
+  if(r.status===401){const t=prompt("🔒 ShortPilot demande un jeton d'accès (variable SHORTPILOT_TOKEN du serveur) :");
+    if(t!=null){SP_TOKEN=t;localStorage.setItem('sp_token',t);o.headers['X-ShortPilot-Token']=t;r=await fetch(u,o);}}
+  return r.json().catch(()=>{throw new Error(`Réponse serveur invalide (HTTP ${r.status}). Consultez la fenêtre ShortPilot pour le détail.`);});
+}
+function jpost(u,b){return api(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b||{})});}
+function esc(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function mediaUrl(f){return '/media/'+encodeURIComponent(f)+(SP_TOKEN?('?token='+encodeURIComponent(SP_TOKEN)):'');}
+
+/* ---- onglets ---- */
+let STUDIO3D_READY=false, STUDIO3D_PENDING=null, STUDIO3D_POLL=null;
+function studio3dMessage(type, data={}){
+  $('#studio3d-frame').contentWindow?.postMessage({type,...data},location.origin);
+}
+function showTab(name){
+  $$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===name));
+  $$('.tab').forEach(t=>t.classList.toggle('on',t.id==='tab-'+name));
+  document.body.classList.toggle('studio3d-open',name==='studio3d');
+  if(name==='library')loadLibrary();
+  const frame=$('#studio3d-frame');
+  if(name==='studio3d'&&!frame.dataset.loaded){
+    frame.dataset.loaded='true';frame.src='/studio3d/';
+    $('#studio3d-status').textContent='Chargement du moteur 3D local…';
+  }
+  if(STUDIO3D_READY)studio3dMessage('shortpilot:visibility',{visible:name==='studio3d'});
+}
+$$('nav button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+function sendScriptTo3d(){
+  const script=currentScript();
+  if(!script.scenes.length){alert('Générez ou écrivez d’abord le script dans Créer.');return;}
+  STUDIO3D_PENDING={script,topic:$('#topic').value||script.title,duration:parseInt($('#duration').value||'60')};
+  showTab('studio3d');
+  if(STUDIO3D_READY){studio3dMessage('shortpilot:script',STUDIO3D_PENDING);STUDIO3D_PENDING=null;}
+}
+$('#studio3d-send').onclick=sendScriptTo3d;
+window.addEventListener('message',event=>{
+  if(event.origin!==location.origin||event.source!==$('#studio3d-frame').contentWindow)return;
+  const message=event.data||{};
+  if(message.type==='shortpilot:3d-ready'){
+    STUDIO3D_READY=true;
+    $('#studio3d-status').textContent='Studio prêt · moteur 3D local · exports ajoutés à la bibliothèque.';
+    if(STUDIO3D_PENDING){studio3dMessage('shortpilot:script',STUDIO3D_PENDING);STUDIO3D_PENDING=null;}
+  }else if(message.type==='shortpilot:library'){
+    showTab('library');
+  }else if(message.type==='shortpilot:3d-export'&&typeof message.jobId==='string'){
+    $('#studio3d-status').textContent='Capture reçue · conversion MP4 et création de la miniature…';
+    clearInterval(STUDIO3D_POLL);
+    STUDIO3D_POLL=setInterval(async()=>{
+      const job=await api('/api/job/'+encodeURIComponent(message.jobId));
+      if(job.status==='done'){
+        clearInterval(STUDIO3D_POLL);loadLibrary();
+        $('#studio3d-status').textContent='Vidéo 3D enregistrée dans la bibliothèque. Vous pouvez la télécharger ou la publier.';
+        studio3dMessage('shortpilot:3d-saved');
+      }else if(job.status==='error'){
+        clearInterval(STUDIO3D_POLL);
+        $('#studio3d-status').textContent='Import 3D : '+(job.error||'erreur de conversion');
+      }
+    },1500);
+  }
+});
+
+function refreshVisualNotes(){
+  if(!CFG)return;
+  const mode=$('#visuals').value;
+  const comfy=CFG.comfyui||{};
+  const comfyText=comfy.online
+    ?`ComfyUI local détecté — checkpoint : ${comfy.checkpoint||'auto'}.`
+    :'ComfyUI local indisponible : démarrez-le sur http://127.0.0.1:8188.';
+  $('#comfynote').textContent=comfyText;
+  $('#qualitynote').textContent='Aucune clé API n’est nécessaire pour les images et les mouvements de montage.';
+  if(mode==='comfy'){
+    $('#visualnote').textContent='Images générées directement sur ton PC par ComfyUI / KSampler. Aucune clé API externe n’est nécessaire.';
+  }else if(mode==='comfy_quality'){
+    $('#visualnote').textContent='Workflow ComfyUI qualité : upscale local, seconde passe légère et FaceDetailer conditionnel après détection. Plus lent, sans clé API.';
+  }else if(mode==='motion'){
+    $('#visualnote').textContent='Chaque scène est une image ComfyUI locale avec un mouvement de caméra varié au montage : zoom, panoramique ou déplacement vertical. Gratuit, sans clé API.';
+  }else if(mode==='images'){
+    $('#visualnote').textContent='Photos libres adaptées au texte de chaque scène. En cas d’indisponibilité réseau, le rendu utilise le thème graphique choisi.';
+  }else{
+    $('#visualnote').textContent='Rendu léger avec arrière-plans graphiques, zoom cinéma et sous-titres.';
+  }
+}
+
+/* ---- init ---- */
+async function init(){
+  CFG=await api('/api/config');
+  const nsel=$('#niche'); nsel.innerHTML='';
+  CFG.niches.forEach(n=>{const o=document.createElement('option');o.value=n.id;o.textContent=n.label;nsel.appendChild(o);});
+  $('#b_niches').innerHTML=CFG.niches.filter(n=>n.id!=='sujet').map(n=>
+    `<label class="chk"><input type="checkbox" class="bn" value="${n.id}" ${['motivation','faits','psychologie'].includes(n.id)?'checked':''}> ${n.label}</label>`).join('');
+  $('#ap_niches').innerHTML=CFG.niches.filter(n=>n.id!=='sujet').map(n=>
+    `<label class="chk"><input type="checkbox" class="apn" value="${n.id}"> ${n.label}</label>`).join('');
+  const st=$('#style'),dst=$('#d_style');
+  CFG.themes.forEach(t=>{[st,dst].forEach(s=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.label;s.appendChild(o);});});
+  const mu=$('#music'),dmu=$('#d_music');
+  CFG.musics.forEach(m=>{[mu,dmu].forEach(s=>{const o=document.createElement('option');o.value=m.id;o.textContent=m.label;s.appendChild(o);});});
+  // durées
+  const DU_LABEL={0:'Auto (~35 s)',20:'~20 secondes',30:'~30 secondes',45:'~45 secondes',60:'~1 minute',90:'~1 min 30',120:'~2 minutes',180:'~3 minutes',240:'~4 minutes',300:'~5 minutes'};
+  [$('#duration'),$('#d_duration')].forEach(s=>{
+    (CFG.durations||[0,20,30,45,60,90,120]).forEach(d=>{const o=document.createElement('option');o.value=d;o.textContent=DU_LABEL[d]||('~'+d+' s');s.appendChild(o);});
+  });
+  // voix
+  fillVoices();
+  $('#lang').onchange=fillVoices;
+  $('#voicepill').className='pill '+(CFG.voice_available?'ok':'err');
+  $('#voicepill').textContent='🎙️ '+(CFG.voice_engine||'')+(CFG.voice_available?' ✅':' ❌');
+  const yt=CFG.youtube;
+  $('#ytpill').className='pill '+(yt.configured?'ok':'warn');
+  $('#ytpill').textContent=yt.configured?(yt.authenticated?'Configuré & connecté ✅':'Configuré ✅ (connexion à la 1ʳᵉ publication)'):'Non configuré ⚠️';
+  const s=CFG.settings;
+  $('#watermark').value=s.watermark||''; $('#d_watermark').value=s.watermark||'';
+  $('#yt_watermark').value=s.watermark||'';
+  $('#webhook').value=s.webhook_url||''; $('#ytprivacy').value=s.youtube_privacy||'public';
+  $$('input[name=ptarget]').forEach(r=>r.checked=(r.value===(s.publish_target||'webhook')));
+  if(s.style){$('#style').value=s.style;$('#d_style').value=s.style;}
+  if(s.music){$('#music').value=s.music;$('#d_music').value=s.music;}
+  if(s.visuals){$('#visuals').value=s.visuals;$('#d_visuals').value=s.visuals;}
+  if(s.content_source){$('#csource').value=s.content_source;$('#d_csource').value=s.content_source;}
+  if(s.content_niche)$('#niche').value=s.content_niche;
+  if(s.comfyui_url)$('#d_comfyurl').value=s.comfyui_url;
+  if(s.comfyui_ckpt)$('#d_comfyckpt').value=s.comfyui_ckpt;
+  if(s.quality)$('#quality').value=s.quality;
+  if(s.duration!=null){$('#duration').value=s.duration;$('#d_duration').value=s.duration;}
+  if(s.voice_id){$('#voiceid').value=s.voice_id;fillVoices();$('#voiceid').value=s.voice_id;}
+  $('#voice').checked=s.voice!==false;
+  const ap=s.autopilot||{};
+  $('#ap_enabled').checked=!!ap.enabled; $('#ap_autopub').checked=!!ap.auto_publish;
+  $('#ap_lang').value=ap.language||'fr'; $('#ap_t1').value=(ap.times&&ap.times[0])||'09:00'; $('#ap_t2').value=(ap.times&&ap.times[1])||'';
+  $$('.apn').forEach(c=>c.checked=(ap.niches||[]).includes(c.value));
+  $('#cookies_browser').value=s.cookies_browser||'';
+  $('#cookiespill').className='pill '+(CFG.cookies_txt?'ok':'warn');
+  $('#cookiespill').textContent=CFG.cookies_txt?'session locale détectée ✅':'pas de session locale';
+  setApPill(s);
+  $('#visuals').onchange=refreshVisualNotes;
+  $('#csource').onchange=refreshTopicLabel;
+  refreshTopicLabel();
+  refreshVisualNotes();
+  loadLibrary();
+}
+function setApPill(s){const ap=s.autopilot||{};$('#appill').className='pill '+(ap.enabled?'ok':'warn');
+  $('#appill').textContent=ap.enabled?`Actif (${(ap.times||[]).join(' · ')})`:'Désactivé';}
+function fillVoices(){
+  const lang=$('#lang')?$('#lang').value:'fr';
+  const lst=(CFG&&CFG.voices&&(CFG.voices[lang]||CFG.voices.fr))||[];
+  const cur=$('#voiceid').value, curD=$('#d_voiceid').value;
+  [$('#voiceid'),$('#d_voiceid')].forEach(s=>{if(!s)return;s.innerHTML='';
+    lst.forEach(v=>{const o=document.createElement('option');o.value=v.id;o.textContent=v.label;s.appendChild(o);});});
+  if(lst.find(v=>v.id===cur))$('#voiceid').value=cur;
+  const dv=(CFG.settings&&CFG.settings.voice_id)||'';
+  if($('#d_voiceid')&&lst.find(v=>v.id===curD))$('#d_voiceid').value=curD;
+  else if($('#d_voiceid')&&lst.find(v=>v.id===dv))$('#d_voiceid').value=dv;
+}
+
+/* ---- script ---- */
+function refreshTopicLabel(){
+  const personal=$('#csource').value==='perso';
+  $('#topiclabel').textContent=personal?'Votre lien ou texte source (obligatoire)':'Sujet ou filtre (facultatif)';
+  $('#topic').placeholder=personal?'https://… ou texte d’au moins 60 mots':'Ex : les chats, le trading…';
+}
+async function genScript(){
+  const button=$('#genscriptbtn');
+  if(button.disabled)return;
+  button.disabled=true;
+  try{
+  $('#srcnote').textContent='⏳ Génération en cours…';
+  const r=await jpost('/api/script',{niche:$('#niche').value,language:$('#lang').value,topic:$('#topic').value,
+    duration:parseInt($('#duration').value||'0'),source:$('#csource').value});
+  if(r.error){$('#srcnote').textContent=r.error;return;}
+  $('#s_title').value=r.title; $('#s_caption').value=r.caption||'';
+  $('#s_scenes').value=(r.scenes||[]).join('\n');
+  SCRIPT_VISUAL_PLANS=Array.isArray(r.visual_plans)?r.visual_plans:[];
+  SCRIPT_VISUAL_CONTROLS=Array.isArray(r.visual_controls)?r.visual_controls:[];
+  SCRIPT_VISUAL_FINGERPRINT=typeof r.visual_plan_fingerprint==='string'?r.visual_plan_fingerprint:'';
+  SCRIPT_NICHE=r.niche;
+  const nicheLabel=CFG.niches.find(n=>n.id===r.niche)?.label||r.niche;
+  const sourceLabel=`${nicheLabel} · ${r.source==='local'?'🎲 Sources hors ligne':'🌐 Source'} : ${r.source_name||r.source}`;
+  const lengthLabel=r.word_count!=null?` — ${r.word_count}/${r.target_words} mots · voix estimée ${r.estimated_seconds} s`:'';
+  $('#srcnote').textContent=[sourceLabel+lengthLabel,...(r.warnings||[]).map(w=>'⚠️ '+w)].join(' · ');
+  const durationProposal=Math.round(Number(r.visual_budget?.sustainable_duration_seconds||0));
+  const requestedDuration=parseInt($('#duration').value||'0');
+  const proposalBtn=$('#sustainableDurationBtn');
+  if(durationProposal>0&&durationProposal<requestedDuration){
+    const options=[...$('#duration').options].map(o=>parseInt(o.value)).filter(v=>v>0&&v<=durationProposal);
+    const proposed=options.length?Math.max(...options):durationProposal;
+    proposalBtn.textContent=`↘ Choisir ${proposed} s puis régénérer`;
+    proposalBtn.style.display='inline-block';
+    proposalBtn.onclick=()=>{$('#duration').value=String(proposed);proposalBtn.style.display='none';};
+  }else proposalBtn.style.display='none';
+  }catch(error){
+    $('#srcnote').textContent='Échec de génération : '+(error.message||'connexion interrompue');
+  }finally{
+    button.disabled=false;
+  }
+}
+function currentScript(){
+  const scenes=$('#s_scenes').value.split('\n').map(x=>x.trim()).filter(Boolean);
+  return {title:$('#s_title').value||scenes[0]||'Vidéo',scenes,caption:$('#s_caption').value,
+          niche:$('#niche').value==='surprise'?(SCRIPT_NICHE||'surprise'):$('#niche').value,language:$('#lang').value,
+          visual_plans:SCRIPT_VISUAL_PLANS.length===scenes.length?SCRIPT_VISUAL_PLANS:[],
+          visual_controls:SCRIPT_VISUAL_CONTROLS.length===scenes.length?SCRIPT_VISUAL_CONTROLS:[],
+          visual_plan_fingerprint:SCRIPT_VISUAL_FINGERPRINT};
+}
+
+/* ---- rendu ---- */
+async function doRender(){
+  const script=currentScript();
+  if(!script.scenes.length){alert('Générez ou écrivez un script d\'abord.');return;}
+  $('#renderbtn').disabled=true;
+  const r=await jpost('/api/render',{script,style:$('#style').value,music:$('#music').value,
+    visuals:$('#visuals').value,
+    voice:$('#voice').checked,voice_id:$('#voiceid').value,
+    duration:parseInt($('#duration').value||'0'),
+    quality:$('#quality').value,watermark:$('#watermark').value,
+    auto_publish:$('#autopub').checked});
+  $('#renderbtn').disabled=false;
+  if(r.error){alert(r.error);return;}
+  watchJob(r.job_id);
+}
+function watchJob(id){
+  clearInterval(POLL);
+  $('#jobbox').style.display='block'; $('#jobid').textContent='#'+id.slice(0,8); $('#joblog').textContent='';$('#jobresult').innerHTML='';
+  POLL=setInterval(async()=>{
+    const j=await api('/api/job/'+id);
+    $('#jobstatus').textContent={queued:'⏳ En file d\'attente…',running:'🎬 Rendu en cours…',done:'✅ Terminé !',error:'❌ Erreur'}[j.status]||j.status;
+    $('#joblog').textContent=(j.log||[]).join('\n');
+    const lg=$('#joblog'); lg.scrollTop=lg.scrollHeight;
+    if(j.error)$('#jobresult').innerHTML=`<span class="pill err">${esc(j.error)}</span>`;
+    if(j.status==='done'&&j.result&&j.result.file){
+      clearInterval(POLL);
+      const v=j.result;
+      $('#jobresult').innerHTML=`
+        <video controls src="${mediaUrl(v.file)}"></video>
+        <div class="row" style="margin-top:10px;justify-content:center">
+          <a class="btn" href="${mediaUrl(v.file)}" download>⬇️ Télécharger</a>
+          ${v.visual_report?`<a class="btn sec" href="${mediaUrl(v.visual_report)}" download>🧾 Rapport visuel</a>`:''}
+          <button class="btn sec" onclick='copyCap(${JSON.stringify(v.id)})'>📋 Copier la légende</button>
+          <button class="btn sec" onclick="pubNow('${v.id}')">📤 Publier</button>
+        </div>`;
+      loadLibrary();
+    }
+    if(j.status==='error')clearInterval(POLL);
+  },1500);
+}
+
+/* ---- batch ---- */
+async function doBatch(){
+  const niches=[...$$('.bn')].filter(c=>c.checked).map(c=>c.value);
+  if(!niches.length){alert('Cochez au moins une niche.');return;}
+  const r=await jpost('/api/batch',{count:parseInt($('#b_count').value||'7'),niches,language:$('#lang').value,
+    topic:$('#topic').value,
+    source:$('#csource').value,
+    style:$('#style').value,music:$('#music').value,visuals:$('#visuals').value,
+    voice:$('#voice').checked,voice_id:$('#voiceid').value,
+    duration:parseInt($('#duration').value||'0'),
+    quality:$('#quality').value,watermark:$('#watermark').value,auto_publish:$('#autopub').checked});
+  $('#batchbox').style.display='block';
+  if(r.error)alert(r.error);
+  if(!r.jobs?.length){$('#batchlog').textContent=r.error||'Aucune vidéo créée.';return;}
+  const names=r.jobs.map((j,i)=>`  ${i+1}. ${esc(j.title)} <i>(${esc(j.niche)})</i>`).join('<br>');
+  $('#batchlog').innerHTML=`🚀 Batch lancé : ${r.jobs.length} vidéos en file de production.<br>${names}<br>⏳ Suivi en direct…<br>`;
+  clearInterval(BPOLL);
+  BPOLL=setInterval(async()=>{
+    const all=await api('/api/jobs');
+    const mine=all.jobs.filter(j=>r.jobs.some(x=>x.job_id===j.id));
+    const done=mine.filter(j=>j.status==='done').length, err=mine.filter(j=>j.status==='error').length;
+    $('#batchlog').innerHTML=`🚀 Batch : ${r.jobs.length} vidéos — ✅ ${done} terminées · ❌ ${err} erreurs · ⏳ ${r.jobs.length-done-err} restantes<br>${names}`;
+    if(done+err>=r.jobs.length){clearInterval(BPOLL);loadLibrary();
+      $('#batchlog').innerHTML+='<br>🏁 Batch terminé. Voir l\'onglet Bibliothèque.';}
+  },3000);
+}
+
+/* ---- YouTube / fichier → Shorts ---- */
+let YTPOLL=null, YT_FILEPATH="";
+function ytMode(){
+  const m=[...$$('input[name=yt_mode]')].find(r=>r.checked)?.value||'url';
+  $('#yt_box_url').style.display=m==='url'?'flex':'none';
+  $('#yt_rights_row').style.display=m==='url'?'flex':'none';
+  $('#yt_box_file').style.display=m==='file'?'block':'none';
+  $('#yt_info').style.display='none';
+}
+async function ytInfo(){
+  const url=$('#yt_url').value.trim();
+  if(!url){alert('Collez un lien YouTube.');return;}
+  if(!$('#yt_rights_confirmed').checked){alert("Confirmez d'abord que vous possédez les droits sur cette vidéo YouTube.");return;}
+  $('#yt_anbtn').disabled=true;
+  const r=await jpost('/api/yt/info',{url,rights_confirmed:true});
+  $('#yt_anbtn').disabled=false;
+  if(r.error){alert('❌ '+r.error);return;}
+  const m=Math.floor(r.duration/60),s=r.duration%60;
+  $('#yt_info').style.display='block';
+  $('#yt_info').innerHTML=`<b>${esc(r.title)}</b><div class="muted" style="margin-top:4px">
+    👤 ${esc(r.channel||'')} · ⏱ ${m}min${String(s).padStart(2,'0')}s ·
+    📝 sous-titres : ${(r.subs.length||r.auto_subs.length)?'oui ✅':'non ❌'}</div>`;
+}
+async function ytUpload(){
+  const f=$('#yt_file').files[0];
+  if(!f){alert('Choisissez un fichier vidéo.');return;}
+  const fd=new FormData();
+  fd.append('video',f);
+  const sf=$('#yt_file_subs').files[0];
+  if(sf)fd.append('subs',sf);
+  $('#yt_upbtn').disabled=true;$('#yt_upstate').textContent='⬆️ Envoi en cours…';
+  try{
+    const hdr=SP_TOKEN?{'X-ShortPilot-Token':SP_TOKEN}:{};
+    const r=await fetch('/api/yt/upload',{method:'POST',body:fd,headers:hdr});
+    const j=await r.json();
+    if(j.error){alert('❌ '+j.error);$('#yt_upstate').textContent='Échec.';}
+    else{
+      YT_FILEPATH=j.file_path;
+      const m=Math.floor(j.duration/60),s=j.duration%60;
+      $('#yt_upstate').innerHTML=`✅ <b>${esc(j.name)}</b> — ${j.size_mb} Mo · ${m}min${String(s).padStart(2,'0')}s${j.subs?' · 📝 sous-titres joints':''}`;
+      $('#yt_info').style.display='block';
+      $('#yt_info').innerHTML=`<b>${esc(j.name)}</b><div class="muted" style="margin-top:4px">📁 fichier local · ⏱ ${m}min${String(s).padStart(2,'0')}s · 📝 sous-titres : ${j.subs?'joints ✅':'non fournis (ajoutez un .srt/.vtt)'}</div>`;
+    }
+  }catch(e){alert('❌ Envoi impossible : '+e);$('#yt_upstate').textContent='Échec.';}
+  $('#yt_upbtn').disabled=false;
+}
+async function ytGo(){
+  const m=[...$$('input[name=yt_mode]')].find(r=>r.checked)?.value||'url';
+  const body={count:parseInt($('#yt_count').value||'0'),duration:parseInt($('#yt_duration').value||'30'),
+    framing:$('#yt_framing').value,subtitles:$('#yt_subs').checked,src_format:$('#yt_srcformat').value,
+    watermark:$('#yt_watermark').value,language:$('#lang').value};
+  if(m==='url'){
+    body.url=$('#yt_url').value.trim();
+    if(!body.url){alert('Collez un lien YouTube.');return;}
+    if(!$('#yt_rights_confirmed').checked){alert("Confirmez d'abord que vous possédez les droits sur cette vidéo YouTube.");return;}
+    body.rights_confirmed=true;
+  }else{
+    if(!YT_FILEPATH){alert('Envoyez d\'abord votre fichier vidéo (bouton ⬆️).');return;}
+    body.file_path=YT_FILEPATH;
+  }
+  $('#yt_gobtn').disabled=true;
+  const r=await jpost('/api/yt/shorts',body);
+  $('#yt_gobtn').disabled=false;
+  if(r.error){alert('❌ '+r.error);return;}
+  watchYtJob(r.job_id);
+}
+function watchYtJob(id){
+  clearInterval(YTPOLL);
+  $('#yt_jobbox').style.display='block';$('#yt_jobid').textContent='#'+id.slice(0,8);
+  $('#yt_joblog').textContent='';$('#yt_jobresult').innerHTML='';
+  YTPOLL=setInterval(async()=>{
+    const j=await api('/api/job/'+id);
+    $('#yt_jobstatus').textContent={queued:'⏳ En file d\'attente…',running:'✂️ Production en cours…',done:'✅ Terminé !',error:'❌ Erreur'}[j.status]||j.status;
+    $('#yt_joblog').textContent=(j.log||[]).join('\n');
+    const lg=$('#yt_joblog');lg.scrollTop=lg.scrollHeight;
+    if(j.error){$('#yt_jobresult').innerHTML=`<span class="pill err">${esc(j.error)}</span>`;clearInterval(YTPOLL);}
+    const shorts=(j.result&&j.result.shorts)||[];
+    if(shorts.length){
+      $('#yt_jobresult').innerHTML=shorts.map(v=>`
+        <div class="item"><video controls preload="metadata" src="${mediaUrl(v.file)}"></video>
+        <div style="font-weight:600;margin:8px 0 2px">${esc(v.title)}</div>
+        <div class="row" style="margin-top:8px">
+          <a class="btn sec" style="padding:7px 12px;font-size:13px" href="${mediaUrl(v.file)}" download>⬇️</a>
+          <button class="btn sec" style="padding:7px 12px;font-size:13px" onclick="copyCap('${v.id}')">📋 Légende</button>
+          <button class="btn sec" style="padding:7px 12px;font-size:13px" onclick="pubNow('${v.id}')">📤 Publier</button>
+        </div></div>`).join('');
+      loadLibrary();
+    }
+    if(j.status==='done'||j.status==='error')clearInterval(YTPOLL);
+  },2000);
+}
+
+/* ---- bibliothèque ---- */
+let LIB=[];
+async function loadLibrary(){
+  const r=await api('/api/library'); LIB=r.items||[];
+  $('#libcount').textContent=LIB.length;
+  if(!LIB.length){$('#libgrid').innerHTML='<div class="muted">Aucune vidéo pour l\'instant. Créez-en une !</div>';return;}
+  $('#libgrid').innerHTML=LIB.map(v=>`
+    <div class="item">
+      <video controls preload="metadata" src="${mediaUrl(v.file)}"></video>
+      <div style="font-weight:600;margin:8px 0 2px">${esc(v.title||'Vidéo')}</div>
+      <div class="cap">⏱ ${v.duration||'?'}s · ${esc(v.niche||'')} · ${esc((v.created||'').replace('T',' '))}
+        ${(v.published||[]).length?`<span class="pill ok">Publié ×${v.published.length}</span>`:''}</div>
+      <div class="row" style="margin-top:8px">
+        <a class="btn sec" style="padding:7px 12px;font-size:13px" href="${mediaUrl(v.file)}" download>⬇️</a>
+        ${v.visual_report?`<a class="btn sec" style="padding:7px 12px;font-size:13px" href="${mediaUrl(v.visual_report)}" download>🧾 Rapport</a>`:''}
+        <button class="btn sec" style="padding:7px 12px;font-size:13px" onclick="copyCap('${v.id}')">📋 Légende</button>
+        <button class="btn sec" id="publish_${v.id}" style="padding:7px 12px;font-size:13px" onclick="pubNow('${v.id}')" ${PUB_PENDING.has(v.id)?'disabled':''}>${PUB_PENDING.has(v.id)?'Envoi en cours…':'📤 Publier'}</button>
+        <button class="btn sec" style="padding:7px 12px;font-size:13px" onclick="delVid('${v.id}')">🗑</button>
+      </div>
+      <div class="muted" id="publish_status_${v.id}" role="status" style="white-space:pre-line">${esc(PUB_STATUS[v.id]||'')}</div>
+    </div>`).join('');
+}
+function copyCap(id){
+  const v=LIB.find(x=>x.id===id); if(!v)return;
+  navigator.clipboard.writeText((v.caption||'')+'\n'+(v.hashtags||'')).then(()=>alert('Légende copiée ! Collez-la dans TikTok / Reels / Shorts.'));
+}
+async function pubNow(id){
+  if(PUB_PENDING.has(id))return;
+  PUB_PENDING.add(id);
+  function status(message){
+    PUB_STATUS[id]=message;
+    const box=$('#publish_status_'+id);if(box)box.textContent=message;
+    const button=$('#publish_'+id);if(button){button.disabled=PUB_PENDING.has(id);button.textContent=button.disabled?'Envoi en cours…':'📤 Publier';}
+  }
+  status('Publication publique YouTube + TikTok en cours…');
+  try{
+    const r=await jpost('/api/publish',{video_id:id,target:'webhook'});
+    if(r.error||!r.job_id)throw new Error(r.error||'La publication n’a pas démarré.');
+    const deadline=Date.now()+15*60*1000;
+    while(Date.now()<deadline){
+      const job=await api('/api/job/'+r.job_id);
+      if(job.status==='done'||job.status==='error'){
+        status(job.result?.message||job.error||'Résultat de publication indisponible.');return;
+      }
+      await new Promise(resolve=>setTimeout(resolve,2000));
+    }
+    status('Le serveur poursuit le traitement. Publication publique non encore confirmée.');
+  }catch(error){status('Publication non confirmée : '+error.message);}
+  finally{PUB_PENDING.delete(id);status(PUB_STATUS[id]);await loadLibrary();}
+}
+async function delVid(id){if(!confirm('Supprimer définitivement cette vidéo ?'))return;
+  await jpost('/api/delete',{video_id:id});loadLibrary();}
+
+/* ---- réglages ---- */
+async function savePub(){
+  const tgt=[...$$('input[name=ptarget]')].find(r=>r.checked)?.value||'webhook';
+  await jpost('/api/settings',{webhook_url:$('#webhook').value,publish_target:tgt,youtube_privacy:$('#ytprivacy').value});
+  alert('Réglages de publication enregistrés ✅');
+}
+async function saveCookies(){
+  await jpost('/api/settings',{cookies_browser:$('#cookies_browser').value});
+  alert('Réglage cookies enregistré ✅');
+}
+async function saveAp(){
+  const times=[$('#ap_t1').value,$('#ap_t2').value].filter(Boolean);
+  const niches=[...$$('.apn')].filter(c=>c.checked).map(c=>c.value);
+  const s=await jpost('/api/settings',{autopilot:{enabled:$('#ap_enabled').checked,auto_publish:$('#ap_autopub').checked,
+    language:$('#ap_lang').value,times,niches}});
+  setApPill(s); alert('Pilote automatique enregistré ✅ '+(s.autopilot.enabled?'— il est ACTIF.':''));
+}
+async function saveDefaults(){
+  await jpost('/api/settings',{watermark:$('#d_watermark').value,style:$('#d_style').value,music:$('#d_music').value,
+    voice_id:$('#d_voiceid').value,duration:parseInt($('#d_duration').value||'0'),visuals:$('#d_visuals').value,
+    content_source:$('#d_csource').value,
+    content_niche:$('#niche').value,
+    comfyui_url:$('#d_comfyurl').value,comfyui_ckpt:$('#d_comfyckpt').value,
+    voice:$('#voice').checked,quality:$('#quality').value});
+  $('#watermark').value=$('#d_watermark').value;
+  alert('Réglages enregistrés ✅');
+}
+init();
+</script>
+</body>
+</html>
