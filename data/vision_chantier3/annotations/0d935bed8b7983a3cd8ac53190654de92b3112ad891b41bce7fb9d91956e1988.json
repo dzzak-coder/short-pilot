@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "image": "outputs/visual_states_validation/attempt_26_controlnet/structural_guide.png",
+  "image_sha256": "0d935bed8b7983a3cd8ac53190654de92b3112ad891b41bce7fb9d91956e1988",
+  "source": null,
+  "source_group": null,
+  "plan": null,
+  "split": "unassigned",
+  "annotator": "",
+  "annotated_at": "",
+  "signature": "",
+  "facts": []
+}

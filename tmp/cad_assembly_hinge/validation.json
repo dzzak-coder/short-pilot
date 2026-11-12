@@ -1,0 +1,143 @@
+{
+  "report": {
+    "valid_solids": 4,
+    "connected": true,
+    "interpenetrations": [],
+    "max_mate_residual": 0.0,
+    "note": "Static geometric checks only; not manufacturing certification."
+  },
+  "parts": [
+    {
+      "id": "leaf_left",
+      "name": "Aile gauche \u2014 trois charnons",
+      "stage": "foundation",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 5146.7542659487035,
+      "triangles": 2996
+    },
+    {
+      "id": "leaf_right",
+      "name": "Aile droite \u2014 deux charnons",
+      "stage": "structure",
+      "transform": [
+        [
+          -1.0,
+          1.2246467991473532e-16,
+          0.0,
+          0.0
+        ],
+        [
+          -1.2246467991473532e-16,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 4646.036769403751,
+      "triangles": 2340
+    },
+    {
+      "id": "pin",
+      "name": "Axe traversant",
+      "stage": "mechanism",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 1413.2140392908323,
+      "triangles": 668
+    },
+    {
+      "id": "washer",
+      "name": "Rondelle de retenue",
+      "stage": "finishes",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "volume_mm3": 66.75884388878309,
+      "triangles": 672
+    }
+  ]
+}

@@ -1,0 +1,275 @@
+﻿.\.venv\Scripts\python.exe : .FFFFFFFF.F.....................├ëchec g├®n├®ration web : RuntimeError: HTTP 429
+Au caractère Ligne:1 : 1
++ .\.venv\Scripts\python.exe -m unittest discover -s tests -t . 2>&1 |  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (.FFFFFFFF.F.......Error: HTTP 429:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+..................................................................................
+======================================================================
+FAIL: test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline 
+(tests.test_editorial_niches.EditorialNicheTests.test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline) (niche='actu', 
+lang='fr')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\tests\test_editorial_niches.py", line 34, in 
+test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline
+    offline = content.generate_script(niche, lang=lang, source="local", avoid_repeat=False)
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\content.py", line 902, in generate_script
+    return _sources.generate(collector, niche=niche, lang=lang, topic=topic, target=target,
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             avoid_repeat=avoid_repeat, log=log, local=False)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\sources.py", line 910, in generate
+    bundle = fetch_bundle(source_id, topic, lang, niche, avoid_repeat, log, need_words=wanted)
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: offline
+
+======================================================================
+FAIL: test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline 
+(tests.test_editorial_niches.EditorialNicheTests.test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline) (niche='jour', 
+lang='fr')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\tests\test_editorial_niches.py", line 34, in 
+test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline
+    offline = content.generate_script(niche, lang=lang, source="local", avoid_repeat=False)
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\content.py", line 902, in generate_script
+    return _sources.generate(collector, niche=niche, lang=lang, topic=topic, target=target,
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             avoid_repeat=avoid_repeat, log=log, local=False)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\sources.py", line 910, in generate
+    bundle = fetch_bundle(source_id, topic, lang, niche, avoid_repeat, log, need_words=wanted)
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: offline
+
+======================================================================
+FAIL: test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline 
+(tests.test_editorial_niches.EditorialNicheTests.test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline) 
+(niche='science', lang='fr')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\tests\test_editorial_niches.py", line 34, in 
+test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline
+    offline = content.generate_script(niche, lang=lang, source="local", avoid_repeat=False)
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\content.py", line 902, in generate_script
+    return _sources.generate(collector, niche=niche, lang=lang, topic=topic, target=target,
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             avoid_repeat=avoid_repeat, log=log, local=False)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\sources.py", line 910, in generate
+    bundle = fetch_bundle(source_id, topic, lang, niche, avoid_repeat, log, need_words=wanted)
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: offline
+
+======================================================================
+FAIL: test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline 
+(tests.test_editorial_niches.EditorialNicheTests.test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline) (niche='mythes', 
+lang='fr')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\tests\test_editorial_niches.py", line 34, in 
+test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline
+    offline = content.generate_script(niche, lang=lang, source="local", avoid_repeat=False)
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\content.py", line 902, in generate_script
+    return _sources.generate(collector, niche=niche, lang=lang, topic=topic, target=target,
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             avoid_repeat=avoid_repeat, log=log, local=False)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\sources.py", line 910, in generate
+    bundle = fetch_bundle(source_id, topic, lang, niche, avoid_repeat, log, need_words=wanted)
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: offline
+
+======================================================================
+FAIL: test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline 
+(tests.test_editorial_niches.EditorialNicheTests.test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline) (niche='actu', 
+lang='en')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\tests\test_editorial_niches.py", line 34, in 
+test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline
+    offline = content.generate_script(niche, lang=lang, source="local", avoid_repeat=False)
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\content.py", line 902, in generate_script
+    return _sources.generate(collector, niche=niche, lang=lang, topic=topic, target=target,
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             avoid_repeat=avoid_repeat, log=log, local=False)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\sources.py", line 910, in generate
+    bundle = fetch_bundle(source_id, topic, lang, niche, avoid_repeat, log, need_words=wanted)
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: offline
+
+======================================================================
+FAIL: test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline 
+(tests.test_editorial_niches.EditorialNicheTests.test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline) (niche='jour', 
+lang='en')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\tests\test_editorial_niches.py", line 34, in 
+test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline
+    offline = content.generate_script(niche, lang=lang, source="local", avoid_repeat=False)
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\content.py", line 902, in generate_script
+    return _sources.generate(collector, niche=niche, lang=lang, topic=topic, target=target,
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             avoid_repeat=avoid_repeat, log=log, local=False)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\sources.py", line 910, in generate
+    bundle = fetch_bundle(source_id, topic, lang, niche, avoid_repeat, log, need_words=wanted)
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: offline
+
+======================================================================
+FAIL: test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline 
+(tests.test_editorial_niches.EditorialNicheTests.test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline) 
+(niche='science', lang='en')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\tests\test_editorial_niches.py", line 34, in 
+test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline
+    offline = content.generate_script(niche, lang=lang, source="local", avoid_repeat=False)
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\content.py", line 902, in generate_script
+    return _sources.generate(collector, niche=niche, lang=lang, topic=topic, target=target,
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             avoid_repeat=avoid_repeat, log=log, local=False)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\sources.py", line 910, in generate
+    bundle = fetch_bundle(source_id, topic, lang, niche, avoid_repeat, log, need_words=wanted)
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: offline
+
+======================================================================
+FAIL: test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline 
+(tests.test_editorial_niches.EditorialNicheTests.test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline) (niche='mythes', 
+lang='en')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\tests\test_editorial_niches.py", line 34, in 
+test_each_niche_keeps_its_facts_angle_and_identity_online_and_offline
+    offline = content.generate_script(niche, lang=lang, source="local", avoid_repeat=False)
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\content.py", line 902, in generate_script
+    return _sources.generate(collector, niche=niche, lang=lang, topic=topic, target=target,
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             avoid_repeat=avoid_repeat, log=log, local=False)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\core\sources.py", line 910, in generate
+    bundle = fetch_bundle(source_id, topic, lang, niche, avoid_repeat, log, need_words=wanted)
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\farhi\miniconda3\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: offline
+
+======================================================================
+FAIL: test_no_cached_facts_never_becomes_motivational_stock 
+(tests.test_editorial_niches.EditorialNicheTests.test_no_cached_facts_never_becomes_motivational_stock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\farhi\OneDrive\Desktop\ShortPilot STUDIO\shortpilot\tests\test_editorial_niches.py", line 51, in 
+test_no_cached_facts_never_becomes_motivational_stock
+    self.assertIn("error", result)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: 'error' not found in {'id': '820b7644ad64', 'niche': 'actu', 'language': 'fr', 'title': "Les d├®fis d'une femme 
+politique devenue m├¿re", 'hook': 'Concilier carri├¿re et maternit├® reste un d├®fi.', 'cta': "Abonne-toi pour conna├«tre la suite de 
+l'histoire.", 'scenes': ['Concilier carri├¿re et maternit├® reste un d├®fi.', "Marine Tondelier, comme S├®gol├¿ne Royal, en est 
+l'exemple.", 'Femmes politiques ne devraient pas ├¬tre des sujets de commentaires.', 'Anna Roy d├®nonce les injonctions 
+contradictoires.', 'M├¿res politiques ne doivent pas dispara├«tre des radars m├®diatiques.', "Tondelier a repris son activit├® politique 
+rapidement apr├¿s l'accouchement.", 'Les attentes sur les femmes politiques ne changent pas malgr├® les progr├¿s.', 'Restez inform├® 
+pour soutenir les femmes politiques.', 'Lisez le livre de Anna Roy pour plus de d├®tails.', "Abonne-toi pour conna├«tre la suite de 
+l'histoire."], 'caption': "Des m├¿res, des politiques, des leaders. Elles font face ├á de nombreux d├®fis. #FemmesPolitiques 
+#Diversit├®\n\n#actu #actualite #info #news #politique #devenue #shorts #reels\n\nSources : Actualit├® ÔÇö Le Monde ; Le Monde ┬½ Etre 
+une femme politique et devenir m├¿re, le pi├¿ge de lÔÇÖinjonction con ┬╗ ; franceinfo ┬½ La m├¿re d'├®l├¿ve soup├ºonn├®e d'avoir 
+agress├® une directrice d'├®cole ├á Ni ┬╗", 'hashtags': '#actu #actualite #info #news #politique #devenue #shorts #reels', 'angle': 
+'pourquoi_maintenant', 'source': 'web', 'source_name': 'Actualit├® ÔÇö Le Monde', 'source_url': 'https://www.lemonde.fr/politique/article
+/2026/11/03/etre-une-femme-politique-et-devenir-mere-le-piege-de-l-injonction-contradictoire_6805594_823448.html', 'sources': [{'title': 
+'Etre une femme politique et devenir m├¿re, le pi├¿ge de lÔÇÖinjonction contradictoire', 'url': 'https://www.lemonde.fr/politique/article
+/2026/11/03/etre-une-femme-politique-et-devenir-mere-le-piege-de-l-injonction-contradictoire_6805594_823448.html'}, {'title': "La m├¿re 
+d'├®l├¿ve soup├ºonn├®e d'avoir agress├® une directrice d'├®cole ├á Nice est sous OQTF et avait ├®t├® suivie pour radicalisation 
+islamiste", 'url': 'https://www.franceinfo.fr/faits-divers/la-mere-d-eleve-soupconnee-d-avoir-agresse-une-directrice-d-ecole-a-nice-est-s
+ous-oqtf-et-avait-ete-suivie-pour-radicalisation_8265902.html#xtor=RSS-3-[lestitres]'}, {'title': "Accus├®e d'outrages, rapidement 
+lib├®r├®e... Ce que l'on sait de l'interpellation violente d'une infirmi├¿re devant un lyc├®e bloqu├® ├á Montpellier", 'url': 'https://ww
+w.franceinfo.fr/societe/education/blocage-des-lycees/accusee-d-outrages-rapidement-liberee-ce-que-l-on-sait-de-l-interpellation-violente-
+d-une-infirmiere-devant-un-lycee-bloque-a-montpellier_8265317.html#xtor=RSS-3-[lestitres]'}], 'warnings': [], 'target_words': 90, 
+'word_count': 85, 'estimated_seconds': 32.9, 'target_seconds': 35, 'duration_ok': True, 'visual_plans': ["opening establishing shot, 
+shot 1 of 10. Story subject: Les d├®fis d'une femme politique devenue m├¿re. Depict this exact single moment: Marine Tondelier, comme 
+S├®gol├¿ne Royal, en est l'exemple.. One main subject, one setting, one visible action; no collage, no split screen, no other moment 
+from the story.", "story action shot, shot 2 of 10. Story subject: Les d├®fis d'une femme politique devenue m├¿re. Depict this exact 
+single moment: Marine Tondelier, comme S├®gol├¿ne Royal, en est l'exemple.. One main subject, one setting, one visible action; no 
+collage, no split screen, no other moment from the story.", "story action shot, shot 3 of 10. Story subject: Les d├®fis d'une femme 
+politique devenue m├¿re. Depict this exact single moment: Femmes politiques ne devraient pas ├¬tre des sujets de commentaires.. One main 
+subject, one setting, one visible action; no collage, no split screen, no other moment from the story.", "story action shot, shot 4 of 
+10. Story subject: Les d├®fis d'une femme politique devenue m├¿re. Depict this exact single moment: Anna Roy d├®nonce les injonctions 
+contradictoires.. One main subject, one setting, one visible action; no collage, no split screen, no other moment from the story.", 
+"story action shot, shot 5 of 10. Story subject: Les d├®fis d'une femme politique devenue m├¿re. Depict this exact single moment: M├¿res 
+politiques ne doivent pas dispara├«tre des radars m├®diatiques.. One main subject, one setting, one visible action; no collage, no split 
+screen, no other moment from the story.", "story action shot, shot 6 of 10. Story subject: Les d├®fis d'une femme politique devenue 
+m├¿re. Depict this exact single moment: Tondelier a repris son activit├® politique rapidement apr├¿s l'accouchement.. One main subject, 
+one setting, one visible action; no collage, no split screen, no other moment from the story.", "story action shot, shot 7 of 10. Story 
+subject: Les d├®fis d'une femme politique devenue m├¿re. Depict this exact single moment: Les attentes sur les femmes politiques ne 
+changent pas malgr├® les progr├¿s.. One main subject, one setting, one visible action; no collage, no split screen, no other moment from 
+the story.", "story action shot, shot 8 of 10. Story subject: Les d├®fis d'une femme politique devenue m├¿re. Depict this exact single 
+moment: Restez inform├® pour soutenir les femmes politiques.. One main subject, one setting, one visible action; no collage, no split 
+screen, no other moment from the story.", "story action shot, shot 9 of 10. Story subject: Les d├®fis d'une femme politique devenue 
+m├¿re. Depict this exact single moment: Lisez le livre de Anna Roy pour plus de d├®tails.. One main subject, one setting, one visible 
+action; no collage, no split screen, no other moment from the story.", "closing consequence shot, shot 10 of 10. Story subject: Les 
+d├®fis d'une femme politique devenue m├¿re. Depict this exact single moment: Lisez le livre de Anna Roy pour plus de d├®tails.. One main 
+subject, one setting, one visible action; no collage, no split screen, no other moment from the story."]}
+
+----------------------------------------------------------------------
+Ran 107 tests in 46.756s
+
+FAILED (failures=9)

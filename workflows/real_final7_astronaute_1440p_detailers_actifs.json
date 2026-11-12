@@ -1,0 +1,1460 @@
+{
+  "id": "6d9291ac-ccaf-49bd-963a-1a4983ea1bf2",
+  "revision": 0,
+  "last_node_id": 31,
+  "last_link_id": 137,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        100,
+        130
+      ],
+      "size": [
+        271.8306640625,
+        98
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            25,
+            30,
+            87,
+            131
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            23,
+            24,
+            88,
+            132
+          ]
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            49,
+            89,
+            121,
+            126,
+            133
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "RealVisXL_V5.0_Lightning_fp16.safetensors"
+      ],
+      "widgets_values_named": {
+        "ckpt_name": "RealVisXL_V5.0_Lightning_fp16.safetensors"
+      }
+    },
+    {
+      "id": 2,
+      "type": "CLIPTextEncode",
+      "pos": [
+        479.0767578125,
+        130
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 23
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 137
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            26,
+            31,
+            90,
+            134
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "(texte fourni par le nœud ImpactWildcardProcessor)"
+      ],
+      "widgets_values_named": {
+        "text": "(texte fourni par le nœud ImpactWildcardProcessor)"
+      }
+    },
+    {
+      "id": 3,
+      "type": "CLIPTextEncode",
+      "pos": [
+        479.0767578125,
+        460
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 24
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            27,
+            32,
+            91,
+            135
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "text, words, letters, watermark, logo, caption, ugly, blurry, low quality, lowres, jpeg artifacts, smeared stars, blurry stars, muddy background, flat lighting, overexposed, oversaturated, cartoon, illustration, painting, 3d render, multiple astronauts, face visible, deformed helmet, extra limbs, duplicate, vertical composition"
+      ],
+      "widgets_values_named": {
+        "text": "text, words, letters, watermark, logo, caption, ugly, blurry, low quality, lowres, jpeg artifacts, smeared stars, blurry stars, muddy background, flat lighting, overexposed, oversaturated, cartoon, illustration, painting, 3d render, multiple astronauts, face visible, deformed helmet, extra limbs, duplicate, vertical composition"
+      }
+    },
+    {
+      "id": 4,
+      "type": "EmptyLatentImage",
+      "pos": [
+        100,
+        358
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            28
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        1280,
+        720,
+        1
+      ],
+      "widgets_values_named": {
+        "width": 1280,
+        "height": 720,
+        "batch_size": 1
+      },
+      "title": "Latent 16:9 (1280x720 -> 2560x1440 final)"
+    },
+    {
+      "id": 5,
+      "type": "KSampler",
+      "pos": [
+        1063.2419273994103,
+        -175.23575636397428
+      ],
+      "size": [
+        270,
+        262
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 25
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 26
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 27
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            115
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        67497826661668,
+        "randomize",
+        8,
+        2,
+        "euler",
+        "sgm_uniform",
+        1
+      ],
+      "widgets_values_named": {
+        "seed": 67497826661668,
+        "control_after_generate": "randomize",
+        "steps": 8,
+        "cfg": 2,
+        "sampler_name": "euler",
+        "scheduler": "sgm_uniform",
+        "denoise": 1
+      }
+    },
+    {
+      "id": 7,
+      "type": "KSampler",
+      "pos": [
+        1653.0585427734445,
+        -275.9744049432909
+      ],
+      "size": [
+        270,
+        262
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 30
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 31
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 32
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 127
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            119
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        874630977038393,
+        "randomize",
+        8,
+        1.5,
+        "euler",
+        "sgm_uniform",
+        0.3
+      ],
+      "widgets_values_named": {
+        "seed": 874630977038393,
+        "control_after_generate": "randomize",
+        "steps": 8,
+        "cfg": 1.5,
+        "sampler_name": "euler",
+        "scheduler": "sgm_uniform",
+        "denoise": 0.3
+      },
+      "title": "Raffinage 2x (détails)"
+    },
+    {
+      "id": 8,
+      "type": "VAEDecode",
+      "pos": [
+        1796.4025014350696,
+        167.26009967907382
+      ],
+      "size": [
+        151.13671875,
+        46
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 115
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 49
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            46
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 9,
+      "type": "UltralyticsDetectorProvider",
+      "pos": [
+        100,
+        594
+      ],
+      "size": [
+        279.0767578125,
+        78
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "BBOX_DETECTOR",
+          "type": "BBOX_DETECTOR",
+          "links": [
+            92
+          ]
+        },
+        {
+          "name": "SEGM_DETECTOR",
+          "type": "SEGM_DETECTOR",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UltralyticsDetectorProvider"
+      },
+      "widgets_values": [
+        "bbox/face_yolov8m.pt"
+      ],
+      "widgets_values_named": {
+        "model_name": "bbox/face_yolov8m.pt"
+      }
+    },
+    {
+      "id": 11,
+      "type": "ImageSharpen",
+      "pos": [
+        1488.9661211510022,
+        741.076050423662
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 93
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            44
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageSharpen"
+      },
+      "widgets_values": [
+        1,
+        0.38,
+        0.4
+      ],
+      "widgets_values_named": {
+        "sharpen_radius": 1,
+        "sigma": 0.38,
+        "alpha": 0.4
+      }
+    },
+    {
+      "id": 12,
+      "type": "SaveImage",
+      "pos": [
+        1859.305667028823,
+        741.5743642171389
+      ],
+      "size": [
+        314.48046875,
+        270
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 44
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        "fond_ecran_astronaute_1440p"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "fond_ecran_astronaute_1440p"
+      }
+    },
+    {
+      "id": 13,
+      "type": "ImageUpscaleWithModel",
+      "pos": [
+        2112.470140908336,
+        579.6619725511321
+      ],
+      "size": [
+        284.3599609375,
+        46
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "upscale_model",
+          "type": "UPSCALE_MODEL",
+          "link": 45
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 46
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            128
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageUpscaleWithModel"
+      }
+    },
+    {
+      "id": 16,
+      "type": "UpscaleModelLoader",
+      "pos": [
+        2151.3074469222506,
+        390.6049536202874
+      ],
+      "size": [
+        348.1744140625,
+        58
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "UPSCALE_MODEL",
+          "type": "UPSCALE_MODEL",
+          "links": [
+            45
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UpscaleModelLoader"
+      },
+      "widgets_values": [
+        "4x-UltraSharp.pth"
+      ],
+      "widgets_values_named": {
+        "model_name": "4x-UltraSharp.pth"
+      }
+    },
+    {
+      "id": 22,
+      "type": "FaceDetailer",
+      "pos": [
+        986.3054196287449,
+        685.378521264938
+      ],
+      "size": [
+        400,
+        960
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 120
+        },
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 87
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 88
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 89
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 90
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 91
+        },
+        {
+          "name": "bbox_detector",
+          "type": "BBOX_DETECTOR",
+          "link": 92
+        },
+        {
+          "name": "sam_model_opt",
+          "shape": 7,
+          "type": "SAM_MODEL",
+          "link": null
+        },
+        {
+          "name": "segm_detector_opt",
+          "shape": 7,
+          "type": "SEGM_DETECTOR",
+          "link": null
+        },
+        {
+          "name": "detailer_hook",
+          "shape": 7,
+          "type": "DETAILER_HOOK",
+          "link": null
+        },
+        {
+          "name": "scheduler_func_opt",
+          "shape": 7,
+          "type": "SCHEDULER_FUNC",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            130
+          ]
+        },
+        {
+          "name": "cropped_refined",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "cropped_enhanced_alpha",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": []
+        },
+        {
+          "name": "detailer_pipe",
+          "type": "DETAILER_PIPE",
+          "links": []
+        },
+        {
+          "name": "cnet_images",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FaceDetailer"
+      },
+      "widgets_values": [
+        512,
+        true,
+        1024,
+        799812179105387,
+        "randomize",
+        5,
+        1.5,
+        "euler",
+        "sgm_uniform",
+        0.3,
+        5,
+        true,
+        true,
+        0.5,
+        10,
+        3,
+        "center-1",
+        0,
+        0.93,
+        0,
+        0.7,
+        "False",
+        10,
+        "",
+        1,
+        false,
+        20,
+        true,
+        true
+      ],
+      "widgets_values_named": {
+        "guide_size": 512,
+        "guide_size_for": true,
+        "max_size": 1024,
+        "seed": 799812179105387,
+        "control_after_generate": "randomize",
+        "steps": 5,
+        "cfg": 1.5,
+        "sampler_name": "euler",
+        "scheduler": "sgm_uniform",
+        "denoise": 0.3,
+        "feather": 5,
+        "noise_mask": true,
+        "force_inpaint": true,
+        "bbox_threshold": 0.5,
+        "bbox_dilation": 10,
+        "bbox_crop_factor": 3,
+        "sam_detection_hint": "center-1",
+        "sam_dilation": 0,
+        "sam_threshold": 0.93,
+        "sam_bbox_expansion": 0,
+        "sam_mask_hint_threshold": 0.7,
+        "sam_mask_hint_use_negative": "False",
+        "drop_size": 10,
+        "wildcard": "",
+        "cycle": 1,
+        "inpaint_model": false,
+        "noise_mask_feather": 20,
+        "tiled_encode": true,
+        "tiled_decode": true
+      }
+    },
+    {
+      "id": 25,
+      "type": "VAEDecodeTiled",
+      "pos": [
+        2045.5917048865272,
+        -202.8680265090748
+      ],
+      "size": [
+        270,
+        150
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 119
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 121
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            120
+          ]
+        }
+      ],
+      "title": "VAE Decode Tiled (final)",
+      "properties": {
+        "Node name for S&R": "VAEDecodeTiled"
+      },
+      "widgets_values": [
+        1024,
+        64,
+        64,
+        8
+      ],
+      "widgets_values_named": {
+        "tile_size": 1024,
+        "overlap": 64,
+        "temporal_size": 64,
+        "temporal_overlap": 8
+      }
+    },
+    {
+      "id": 26,
+      "type": "VAEEncodeTiled",
+      "pos": [
+        1435.6178868864226,
+        371.69131212141457
+      ],
+      "size": [
+        310.255859375,
+        150
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 129
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 126
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            127
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEEncodeTiled"
+      },
+      "widgets_values": [
+        1024,
+        64,
+        64,
+        8
+      ],
+      "widgets_values_named": {
+        "tile_size": 1024,
+        "overlap": 64,
+        "temporal_size": 64,
+        "temporal_overlap": 8
+      }
+    },
+    {
+      "id": 28,
+      "type": "ImageScaleBy",
+      "pos": [
+        1435,
+        520
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 128
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            129
+          ]
+        }
+      ],
+      "title": "Réduire x0.5 (4x -> 2x)",
+      "properties": {
+        "Node name for S&R": "ImageScaleBy"
+      },
+      "widgets_values": [
+        "lanczos",
+        0.5
+      ],
+      "widgets_values_named": {
+        "upscale_method": "lanczos",
+        "scale_by": 0.5
+      }
+    },
+    {
+      "id": 29,
+      "type": "ImpactWildcardProcessor",
+      "pos": [
+        100,
+        -470
+      ],
+      "size": [
+        700,
+        420
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "processed text",
+          "type": "STRING",
+          "links": [
+            137
+          ]
+        }
+      ],
+      "title": "Prompt astronaute (fond d'écran)",
+      "properties": {
+        "Node name for S&R": "ImpactWildcardProcessor"
+      },
+      "widgets_values": [
+        "RAW photo, cinematic horizontal 16:9 space wallpaper, ultra detailed. A lone astronaut in a white spacesuit seen in profile on the right side of the frame, head slightly bowed, large glass helmet whose visor reflects a glowing blue-rimmed planet with orange lava-like lights and fiery cloud swirls, detailed suit with gold trim, hatches and panels, dramatic cold rim light, deep black space on the left with the Milky Way band, dense crisp pinpoint starfield, tiny sharp stars, a small grey moon, a distant orange planet, volumetric glow, photorealistic, high dynamic range, sharp focus, fine detail, 8k",
+        "",
+        "populate",
+        123456789,
+        "randomize",
+        "Select Wildcard 🟢 Full Cache"
+      ],
+      "widgets_values_named": {
+        "wildcard_text": "RAW photo, cinematic horizontal 16:9 space wallpaper, ultra detailed. A lone astronaut in a white spacesuit seen in profile on the right side of the frame, head slightly bowed, large glass helmet whose visor reflects a glowing blue-rimmed planet with orange lava-like lights and fiery cloud swirls, detailed suit with gold trim, hatches and panels, dramatic cold rim light, deep black space on the left with the Milky Way band, dense crisp pinpoint starfield, tiny sharp stars, a small grey moon, a distant orange planet, volumetric glow, photorealistic, high dynamic range, sharp focus, fine detail, 8k",
+        "populated_text": "",
+        "mode": "populate",
+        "seed": 123456789,
+        "control_after_generate": "randomize",
+        "Select to add Wildcard": "Select Wildcard 🟢 Full Cache"
+      }
+    },
+    {
+      "id": 30,
+      "type": "UltralyticsDetectorProvider",
+      "pos": [
+        100,
+        760
+      ],
+      "size": [
+        279.0767578125,
+        78
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "BBOX_DETECTOR",
+          "type": "BBOX_DETECTOR",
+          "links": [
+            136
+          ]
+        },
+        {
+          "name": "SEGM_DETECTOR",
+          "type": "SEGM_DETECTOR",
+          "links": null
+        }
+      ],
+      "title": "Détecteur de mains",
+      "properties": {
+        "Node name for S&R": "UltralyticsDetectorProvider"
+      },
+      "widgets_values": [
+        "bbox/hand_yolov8s.pt"
+      ],
+      "widgets_values_named": {
+        "model_name": "bbox/hand_yolov8s.pt"
+      }
+    },
+    {
+      "id": 31,
+      "type": "FaceDetailer",
+      "pos": [
+        986.3,
+        1720
+      ],
+      "size": [
+        400,
+        960
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 130
+        },
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 131
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 132
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 133
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 134
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 135
+        },
+        {
+          "name": "bbox_detector",
+          "type": "BBOX_DETECTOR",
+          "link": 136
+        },
+        {
+          "name": "sam_model_opt",
+          "shape": 7,
+          "type": "SAM_MODEL",
+          "link": null
+        },
+        {
+          "name": "segm_detector_opt",
+          "shape": 7,
+          "type": "SEGM_DETECTOR",
+          "link": null
+        },
+        {
+          "name": "detailer_hook",
+          "shape": 7,
+          "type": "DETAILER_HOOK",
+          "link": null
+        },
+        {
+          "name": "scheduler_func_opt",
+          "shape": 7,
+          "type": "SCHEDULER_FUNC",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            93
+          ]
+        },
+        {
+          "name": "cropped_refined",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "cropped_enhanced_alpha",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": []
+        },
+        {
+          "name": "detailer_pipe",
+          "type": "DETAILER_PIPE",
+          "links": []
+        },
+        {
+          "name": "cnet_images",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "title": "FaceDetailer - MAINS",
+      "properties": {
+        "Node name for S&R": "FaceDetailer"
+      },
+      "widgets_values": [
+        512,
+        true,
+        1024,
+        555111222333,
+        "randomize",
+        5,
+        1.5,
+        "euler",
+        "sgm_uniform",
+        0.4,
+        5,
+        true,
+        true,
+        0.4,
+        20,
+        3,
+        "center-1",
+        0,
+        0.93,
+        0,
+        0.7,
+        "False",
+        10,
+        "",
+        1,
+        false,
+        20,
+        true,
+        true
+      ],
+      "widgets_values_named": {
+        "guide_size": 512,
+        "guide_size_for": true,
+        "max_size": 1024,
+        "seed": 555111222333,
+        "control_after_generate": "randomize",
+        "steps": 5,
+        "cfg": 1.5,
+        "sampler_name": "euler",
+        "scheduler": "sgm_uniform",
+        "denoise": 0.4,
+        "feather": 5,
+        "noise_mask": true,
+        "force_inpaint": true,
+        "bbox_threshold": 0.4,
+        "bbox_dilation": 20,
+        "bbox_crop_factor": 3,
+        "sam_detection_hint": "center-1",
+        "sam_dilation": 0,
+        "sam_threshold": 0.93,
+        "sam_bbox_expansion": 0,
+        "sam_mask_hint_threshold": 0.7,
+        "sam_mask_hint_use_negative": "False",
+        "drop_size": 10,
+        "wildcard": "",
+        "cycle": 1,
+        "inpaint_model": false,
+        "noise_mask_feather": 20,
+        "tiled_encode": true,
+        "tiled_decode": true
+      }
+    }
+  ],
+  "links": [
+    [
+      23,
+      1,
+      1,
+      2,
+      0,
+      "CLIP"
+    ],
+    [
+      24,
+      1,
+      1,
+      3,
+      0,
+      "CLIP"
+    ],
+    [
+      25,
+      1,
+      0,
+      5,
+      0,
+      "MODEL"
+    ],
+    [
+      26,
+      2,
+      0,
+      5,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      27,
+      3,
+      0,
+      5,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      28,
+      4,
+      0,
+      5,
+      3,
+      "LATENT"
+    ],
+    [
+      30,
+      1,
+      0,
+      7,
+      0,
+      "MODEL"
+    ],
+    [
+      31,
+      2,
+      0,
+      7,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      32,
+      3,
+      0,
+      7,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      44,
+      11,
+      0,
+      12,
+      0,
+      "IMAGE"
+    ],
+    [
+      45,
+      16,
+      0,
+      13,
+      0,
+      "UPSCALE_MODEL"
+    ],
+    [
+      46,
+      8,
+      0,
+      13,
+      1,
+      "IMAGE"
+    ],
+    [
+      49,
+      1,
+      2,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      87,
+      1,
+      0,
+      22,
+      1,
+      "MODEL"
+    ],
+    [
+      88,
+      1,
+      1,
+      22,
+      2,
+      "CLIP"
+    ],
+    [
+      89,
+      1,
+      2,
+      22,
+      3,
+      "VAE"
+    ],
+    [
+      90,
+      2,
+      0,
+      22,
+      4,
+      "CONDITIONING"
+    ],
+    [
+      91,
+      3,
+      0,
+      22,
+      5,
+      "CONDITIONING"
+    ],
+    [
+      92,
+      9,
+      0,
+      22,
+      6,
+      "BBOX_DETECTOR"
+    ],
+    [
+      93,
+      31,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      115,
+      5,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      119,
+      7,
+      0,
+      25,
+      0,
+      "LATENT"
+    ],
+    [
+      120,
+      25,
+      0,
+      22,
+      0,
+      "IMAGE"
+    ],
+    [
+      121,
+      1,
+      2,
+      25,
+      1,
+      "VAE"
+    ],
+    [
+      126,
+      1,
+      2,
+      26,
+      1,
+      "VAE"
+    ],
+    [
+      127,
+      26,
+      0,
+      7,
+      3,
+      "LATENT"
+    ],
+    [
+      128,
+      13,
+      0,
+      28,
+      0,
+      "IMAGE"
+    ],
+    [
+      129,
+      28,
+      0,
+      26,
+      0,
+      "IMAGE"
+    ],
+    [
+      130,
+      22,
+      0,
+      31,
+      0,
+      "IMAGE"
+    ],
+    [
+      131,
+      1,
+      0,
+      31,
+      1,
+      "MODEL"
+    ],
+    [
+      132,
+      1,
+      1,
+      31,
+      2,
+      "CLIP"
+    ],
+    [
+      133,
+      1,
+      2,
+      31,
+      3,
+      "VAE"
+    ],
+    [
+      134,
+      2,
+      0,
+      31,
+      4,
+      "CONDITIONING"
+    ],
+    [
+      135,
+      3,
+      0,
+      31,
+      5,
+      "CONDITIONING"
+    ],
+    [
+      136,
+      30,
+      0,
+      31,
+      6,
+      "BBOX_DETECTOR"
+    ],
+    [
+      137,
+      29,
+      0,
+      2,
+      1,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7222100143129877,
+      "offset": [
+        302.45998257091975,
+        345.9580821759096
+      ]
+    },
+    "frontendVersion": "1.53.10"
+  },
+  "version": 0.4
+}

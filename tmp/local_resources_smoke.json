@@ -1,0 +1,16 @@
+{
+  "mode": "text_only",
+  "model": "qwen3.8:27b",
+  "response": "OK",
+  "ollama_models_after": [],
+  "ok": true,
+  "events": [
+    "Ressources locales : RAM libre=23325310976, VRAM libre=15890776064",
+    "Ressource locale : GET /queue avant phase texte",
+    "Ressource locale : POST /free avant Ollama",
+    "Ressources locales : RAM libre=23321763840, VRAM libre=15890776064",
+    "Ressource locale : GET /api/ps",
+    "POST /api/chat minimal",
+    "Ressource locale : GET /api/ps"
+  ]
+}

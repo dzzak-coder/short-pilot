@@ -1,0 +1,69 @@
+{
+  "title": "Charnière métallique à deux ailes",
+  "root": "left_leaf",
+  "parts": [
+    {
+      "id": "left_leaf",
+      "name": "Aile gauche",
+      "factory": "hinge_leaf",
+      "stage": "foundation",
+      "parameters": {
+        "side": "left",
+        "height": 50,
+        "hole_radius": 3
+      }
+    },
+    {
+      "id": "right_leaf",
+      "name": "Aile droite",
+      "factory": "hinge_leaf",
+      "stage": "structure",
+      "parameters": {
+        "side": "right",
+        "height": 50,
+        "hole_radius": 3
+      }
+    },
+    {
+      "id": "hinge_pin",
+      "name": "Tige de la charnière",
+      "factory": "hinge_pin",
+      "stage": "mechanism",
+      "parameters": {
+        "height": 50,
+        "hole_radius": 3,
+        "radius": 2.8
+      }
+    },
+    {
+      "id": "washer",
+      "name": "Rondelle",
+      "factory": "washer",
+      "stage": "finishes",
+      "parameters": {
+        "hole_radius": 3,
+        "thickness": 1
+      }
+    }
+  ],
+  "mates": [
+    {
+      "parent": "left_leaf",
+      "child": "right_leaf",
+      "parent_port": "axis",
+      "child_port": "axis"
+    },
+    {
+      "parent": "left_leaf",
+      "child": "hinge_pin",
+      "parent_port": "axis",
+      "child_port": "axis"
+    },
+    {
+      "parent": "left_leaf",
+      "child": "washer",
+      "parent_port": "axis",
+      "child_port": "seat"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "image": "outputs/visual_states_validation/attempt_20/comfy_70005.png",
+  "image_sha256": "41ea81fddbba1bac238aa6587c24f455725cb9f2ac970bf68e4e3a477b90da05",
+  "source": "Un minuteur rouge sur un bureau en bois, à côté d’un planning fermé, lumière du matin",
+  "source_group": "b2a45eae43260ed81d2525b4b5a46769fa85e4eb168a0af98fd3c33ab6ea5833",
+  "plan": "outputs\\visual_states_validation\\attempt_20\\states_70005.visual.json",
+  "split": "unassigned",
+  "annotator": "",
+  "annotated_at": "",
+  "signature": "",
+  "facts": [
+    {
+      "id": "f1",
+      "type": "object",
+      "category": "subject",
+      "entity": "",
+      "source_span": "Un minuteur rouge sur un bureau en bois, à côté d’un planning fermé, lumière du matin",
+      "requested": "A red kitchen timer on a wooden desk, next to a closed planner, morning sunlight",
+      "required": false,
+      "required_reviewed": false,
+      "status": "indeterminate",
+      "bbox_xyxy": null,
+      "quality": "unassessed",
+      "reason": "",
+      "evidence": ""
+    }
+  ]
+}

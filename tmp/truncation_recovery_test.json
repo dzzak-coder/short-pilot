@@ -1,0 +1,1 @@
+{"code": "cad.box({\nname:\"Boîte de vérification\",\nw:1,\nh:1,\nd:1\n});", "continuations": 1, "durationMs": 3948, "geometryMode": "generated", "model": "qwen2.5-coder:14b", "ok": true, "provider": "ollama", "syntaxChecked": true, "visualAnalysis": null}

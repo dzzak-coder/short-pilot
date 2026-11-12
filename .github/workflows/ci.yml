@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Compilation syntaxique
+        run: python -m compileall app.py core/
+
+      - name: Contrats de fidélité visuelle
+        run: python -m unittest discover -s tests -t . -v
+
+      - name: Tests de fumée (imports + validations sécurité)
+        run: |
+          python - <<'EOF'
+          import importlib
+
+          # modules métier
+          import core.content, core.voice, core.music, core.render, core.autopilot, core.publish, core.ytclip
+
+          # app Flask (ne démarre pas le serveur)
+          appmod = importlib.import_module("app")
+
+          # validations sécurité de base
+          assert appmod.YT_URL_RX.match("https://www.youtube.com/watch?v=xAA11AA1111")
+          assert appmod.YT_URL_RX.match("https://youtu.be/xAA11AA1111")
+          assert not appmod.YT_URL_RX.match("http://169.254.169.254/x")
+          assert not appmod.YT_URL_RX.match("javascript:alert(1)")
+          assert not appmod.YT_URL_RX.match("https://evil.example.com/")
+          assert appmod._int("abc", 45, 20, 120) == 45
+          assert appmod._int("9999", 0, 0, 10) == 10
+
+          # anti-SSRF : IP littérales (aucune résolution DNS requise)
+          from core import publish
+          assert publish.webhook_url_ok("http://127.0.0.1/x")[0] is False
+          assert publish.webhook_url_ok("http://169.254.169.254/x")[0] is False
+          assert publish.webhook_url_ok("ftp://example.com/x")[0] is False
+
+          # génération de contenu (sans réseau)
+          s = core.content.generate_script(niche="motivation", lang="fr", target=30)
+          assert s["scenes"] and s["hashtags"].startswith("#")
+          # options de durée : 20 s → 5 min
+          assert max(core.content.DURATION_OPTIONS) == 300
+          s2 = core.content.generate_script(niche="psychologie", lang="fr", target=300)
+          est = core.content.estimate_seconds(s2["scenes"])
+          assert est > 60, "le script 5 min doit être substantiellement plus long"
+
+          # musique procédurale (sans réseau)
+          p = core.music.synthesize(1.0, "energie")
+          import os; assert os.path.getsize(p) > 1000
+
+          print("✅ Tous les tests de fumée passent")
+          EOF

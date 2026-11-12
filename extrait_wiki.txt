@@ -1,0 +1,174 @@
+﻿def _clean_title(t):
+    t = re.sub(r"\s*\(.*?\)\s*", " ", t or "").strip()
+    t = re.sub(r"\s{2,}", " ", t)
+    if len(t) > 42:
+        t = t[:42].rsplit(" ", 1)[0]
+    return t.strip(" ,:;»«-–—") or (t or "")[:42].strip()
+
+
+def _sentences(text, keep=6):
+    """Phrases « racontables » d'un article ; parenthèses retirées pour la voix."""
+    out = []
+    # Wikipedia extracts can contain section headings such as ``== Structure ==``.
+    # They are neither speech nor a visual action, so remove them before the
+    # sentence split instead of leaking editorial markup into a Short.
+    cleaned_text = _WIKI_HEADING_RX.sub(" ", (text or "").strip())
+    seen = set()
+    for s in _SENT_RX.split(cleaned_text):
+        s = _PAREN_RX.sub(" ", s.strip())
+        s = re.sub(r"^\d+\s*", "", s.strip().strip("—-· ")).strip()
+        s = re.sub(r"\s{2,}", " ", s)
+        s = re.sub(r"\s+([,.;:!?»])", r"\1", s)
+        s = re.sub(r"([«(])\s+", r"\1", s)
+        if not (55 <= len(s) <= 240):
+            continue
+        if _bad_sent.search(s):
+            continue
+        signature = re.sub(r"[^\w]+", "", s.lower())
+        if signature in seen:
+            continue
+        seen.add(signature)
+        out.append(s)
+        if len(out) >= keep:
+            break
+    return out
+
+
+def _select_story_facts(sentences, keep=6):
+-----
+class _WikiParagraphs(HTMLParser):
+    """Extract readable article paragraphs from MediaWiki's parsed HTML."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.depth = 0
+        self.skip_depth = 0
+        self.current = []
+        self.paragraphs = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "p":
+            self.depth += 1
+            self.current = []
+        elif self.depth and tag in ("sup", "style", "script"):
+            self.skip_depth += 1
+
+    def handle_endtag(self, tag):
+        if tag in ("sup", "style", "script") and self.skip_depth:
+            self.skip_depth -= 1
+        elif tag == "p" and self.depth:
+            text = re.sub(r"\s+", " ", "".join(self.current)).strip()
+            if len(text) >= 35:
+                self.paragraphs.append(text)
+            self.current = []
+            self.depth -= 1
+
+    def handle_data(self, data):
+        if self.depth and not self.skip_depth:
+            self.current.append(data)
+
+
+def _wiki_full_article(lang, title):
+    """Fetch the readable paragraphs of one chosen article.
+
+    The extracts API is capped at 1,200 characters. The parse endpoint lets a
+    two-to-five-minute script deepen the same relevant article instead of
+    switching subject or padding the narration with repeated template lines.
+    """
+    if not title:
+        return None
+    cached = _cache_get(f"article:{lang}:{title}")
+    if cached:
+        try:
+            return json.loads(cached[0])
+        except (ValueError, TypeError):
+            pass
+    r = _get("https://%s.wikipedia.org/w/api.php" % lang, params={
+        "action": "parse", "format": "json", "formatversion": "2",
+        "prop": "text", "redirects": "1", "page": title,
+    })
+    if not r:
+        return None
+    try:
+        parsed = (r.json() or {}).get("parse") or {}
+        reader = _WikiParagraphs()
+        reader.feed(parsed.get("text") or "")
+        text = " ".join(reader.paragraphs)
+        if len(text) >= MIN_TEXT:
+            canonical = parsed.get("title") or title
+            url = "https://%s.wikipedia.org/wiki/%s" % (
+                lang, urllib.parse.quote(canonical.replace(" ", "_")),
+            )
+            article = {"title": canonical, "text": text[:18000], "url": url}
+            _cache_put(f"article:{lang}:{title}", [json.dumps(article, ensure_ascii=False)])
+            return article
+    except Exception:
+        pass
+    return None
+
+
+def _cat_members(cat, lang, cmtype="page", limit="300"):
+-----
+    if fact_count < 2:
+        return None
+    payoff_duration = content_mod.estimate_seconds([payoff])
+    if total + payoff_duration <= budget * 1.03:
+        body.append(payoff)
+    return body
+
+
+def _article_story_score(article):
+    """Prefer a concrete story over a flat encyclopedia entry for short videos.
+
+    This is deliberately a content-selection heuristic, not fact generation:
+    all lines still come verbatim from the chosen source article.
+    """
+    raw_title = article.get("title", "")
+    title = _clean_title(raw_title)
+    facts = _sentences(article.get("text", ""), keep=_keep_for())
+    text = " ".join(facts)
+    signals = len(_STORY_SIGNAL_RX.findall(text))
+    dates = len(re.findall(r"\b(?:1[5-9]\d{2}|20\d{2}|\d{1,2}(?:er)?\s+\w+)\b", text))
+    concrete = len(_EVENT_WORD_RX.findall(f"{title} {text}"))
+    penalty = 100 if (_WEAK_STORY_TITLE_RX.search(title)
+                      or _NON_EVENT_TITLE_RX.search(raw_title)) else 0
+    return signals * 3 + dates + concrete * 2 + min(len(facts), 5) - penalty
+
+
+def _storyworthy_article(article, niche):
+    """Reject Wikipedia entries that are valid but poor automatic Short topics."""
+    raw_title = article.get("title", "")
+    title = _clean_title(raw_title)
+    if (_WEAK_STORY_TITLE_RX.search(title) or _NON_EVENT_TITLE_RX.search(raw_title)
+            or _NON_EVENT_TITLE_RX.search(title)):
+        return False
+    text = " ".join(_sentences(article.get("text", ""), keep=_keep_for()))
+    first_fact = _sentences(article.get("text", ""), keep=1)
+    if first_fact and _NON_EVENT_LEAD_RX.search(first_fact[0]):
+-----
+148: _bad_sent = re.compile(r"[\[\]{}|]|homonymie|redirection|Cet article|This article|"
+                       r"est une commune|voir la page|may refer to|not to be confused", re.I)
+# Titres « méta » sans intérêt narratif (années, listes, portails, notions-mères)
+_META_RX = re.compile(r"^(Histoire$|Géographie$|Liste |Portail|Chronologie|Catégorie|Category:|"
+                      r"Modèle|Wikipédia|Wikipedia:|Projet|Project:|Aide|Help:|Fichier|File:)", re.I)
+_YEAR_RX = re.compile(r"^\d{1,4}( av\. J\.-C\.)?$")
+_PAREN_RX = re.compile(r"\s*\([^)]*\)")
+_STORY_SIGNAL_RX = re.compile(
+    r"\b(mais|cependant|puis|ensuite|apres|avant|lorsque|alors|grace|cause|"
+    r"permet|entraine|devient|construit|fonde|lance|attaque|guerre|bataille|"
+    r"disparait|succede|premier|dernier|seul|record|retour|change|why|because|"
+    r"after|before|then|became|built|founded|launched|war|battle|first|last)\b", re.I,
+)
+154: _PAREN_RX = re.compile(r"\s*\([^)]*\)")
+_STORY_SIGNAL_RX = re.compile(
+    r"\b(mais|cependant|puis|ensuite|apres|avant|lorsque|alors|grace|cause|"
+    r"permet|entraine|devient|construit|fonde|lance|attaque|guerre|bataille|"
+    r"disparait|succede|premier|dernier|seul|record|retour|change|why|because|"
+    r"after|before|then|became|built|founded|launched|war|battle|first|last)\b", re.I,
+)
+_BEAT_SPLIT_RX = re.compile(
+    r"\s*(?:;|\s+[—–]\s+|,\s+(?=(?:puis|ensuite|mais|alors|lorsque|apres|après)\b))\s*",
+    re.IGNORECASE,
+)
+_WEAK_STORY_TITLE_RX = re.compile(
+    r"\b(?:historiographie|historiography|sociologie|sociology|cliométrie|"

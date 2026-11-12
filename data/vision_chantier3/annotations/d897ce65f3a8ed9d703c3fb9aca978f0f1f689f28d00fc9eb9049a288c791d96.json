@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "image": "outputs/timer_semantic_validation/comfy_70001.png",
+  "image_sha256": "d897ce65f3a8ed9d703c3fb9aca978f0f1f689f28d00fc9eb9049a288c791d96",
+  "source": "Un minuteur rouge sur un bureau en bois, à côté d’un planning fermé, lumière du matin",
+  "source_group": "b2a45eae43260ed81d2525b4b5a46769fa85e4eb168a0af98fd3c33ab6ea5833",
+  "plan": "outputs\\timer_semantic_validation\\timer_70001_corrected.visual.json",
+  "split": "unassigned",
+  "annotator": "",
+  "annotated_at": "",
+  "signature": "",
+  "facts": []
+}

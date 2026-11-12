@@ -1,0 +1,40 @@
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:8000
+Press CTRL+C to quit
+127.0.0.1 - - [25/Oct/2026 11:30:49] "GET /studio3d/ HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:30:49] "GET /api/studio3d/trellis/jobs/test HTTP/1.1" 404 -
+127.0.0.1 - - [25/Oct/2026 11:43:00] "GET /studio3d/ HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:43:00] "GET /studio3d/assets/index-CxAgTiVs.css HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:43:01] "GET /studio3d/assets/index-Cki9HnT2.js HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:43:01] "GET /studio3d/audio/monument_eiffel_1889/act_1.mp3 HTTP/1.1" 304 -
+127.0.0.1 - - [25/Oct/2026 11:43:01] "GET /studio3d/audio/monument_eiffel_1889/act_3.mp3 HTTP/1.1" 304 -
+127.0.0.1 - - [25/Oct/2026 11:43:01] "GET /studio3d/audio/monument_eiffel_1889/act_2.mp3 HTTP/1.1" 304 -
+127.0.0.1 - - [25/Oct/2026 11:43:01] "GET /studio3d/audio/monument_eiffel_1889/act_4.mp3 HTTP/1.1" 304 -
+127.0.0.1 - - [25/Oct/2026 11:43:01] "GET /studio3d/audio/monument_eiffel_1889/act_6.mp3 HTTP/1.1" 304 -
+127.0.0.1 - - [25/Oct/2026 11:43:01] "GET /studio3d/audio/monument_eiffel_1889/act_5.mp3 HTTP/1.1" 304 -
+127.0.0.1 - - [25/Oct/2026 11:43:01] "GET /studio3d/audio/monument_eiffel_1889/act_7.mp3 HTTP/1.1" 304 -
+127.0.0.1 - - [25/Oct/2026 11:43:01] "GET /studio3d/audio/monument_eiffel_1889/act_8.mp3 HTTP/1.1" 304 -
+127.0.0.1 - - [25/Oct/2026 11:43:40] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:43:40] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:43:40] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:43:40] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:43:40] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:43:40] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:43:41] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:43:41] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:49:26] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:49:26] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:49:26] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:49:26] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:49:26] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:49:26] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:49:26] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:49:26] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:50:44] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:50:44] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:50:44] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:50:44] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:50:44] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:50:44] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:50:45] "POST /api/local-tts/speak HTTP/1.1" 200 -
+127.0.0.1 - - [25/Oct/2026 11:50:45] "POST /api/local-tts/speak HTTP/1.1" 200 -

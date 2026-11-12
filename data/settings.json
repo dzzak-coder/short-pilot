@@ -1,0 +1,32 @@
+{
+  "watermark": "@kabyle",
+  "webhook_url": "http://127.0.0.1:5678/webhook/shortpilot-youtube",
+  "youtube_privacy": "public",
+  "publish_target": "webhook",
+  "voice_id": "fr-denise",
+  "duration": 30,
+  "style": "auto",
+  "music": "instrumental",
+  "visuals": "comfy",
+  "content_source": "web",
+  "content_niche": "motivation",
+  "comfyui_url": "http://127.0.0.1:8188",
+  "comfyui_ckpt": "",
+  "cookies_browser": "",
+  "voice": true,
+  "quality": "1080",
+  "autopilot": {
+    "enabled": false,
+    "language": "fr",
+    "times": [
+      "09:00",
+      "18:30"
+    ],
+    "niches": [
+      "motivation",
+      "faits",
+      "psychologie"
+    ],
+    "auto_publish": false
+  }
+}

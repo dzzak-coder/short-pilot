@@ -1,0 +1,146 @@
+{
+  "prompt": [
+    0,
+    "6886f6e5-d0bc-4053-a4f7-ee59ef9327dc",
+    {
+      "1": {
+        "class_type": "CheckpointLoaderSimple",
+        "inputs": {
+          "ckpt_name": "RealVisXL_V5.0_Lightning_fp16.safetensors"
+        }
+      },
+      "2": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "1",
+            1
+          ],
+          "text": "Professional studio product photo of a red modern street motorcycle, two wheels, engine, fuel tank, seat and handlebars. One complete object, centered, three quarter side view, isolated on pure white background, entire object visible, realistic proportions, sharp focus, no people, no text."
+        }
+      },
+      "3": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+          "clip": [
+            "1",
+            1
+          ],
+          "text": "person, human, rider, hands, multiple objects, collage, text, watermark, cropped, partial object, distorted, broken, extra wheels, duplicate object, scenery, ground plane"
+        }
+      },
+      "4": {
+        "class_type": "EmptyLatentImage",
+        "inputs": {
+          "width": 768,
+          "height": 768,
+          "batch_size": 1
+        }
+      },
+      "5": {
+        "class_type": "KSampler",
+        "inputs": {
+          "model": [
+            "1",
+            0
+          ],
+          "positive": [
+            "2",
+            0
+          ],
+          "negative": [
+            "3",
+            0
+          ],
+          "latent_image": [
+            "4",
+            0
+          ],
+          "seed": 314159,
+          "steps": 8,
+          "cfg": 1.5,
+          "sampler_name": "euler",
+          "scheduler": "sgm_uniform",
+          "denoise": 1.0
+        }
+      },
+      "6": {
+        "class_type": "VAEDecode",
+        "inputs": {
+          "samples": [
+            "5",
+            0
+          ],
+          "vae": [
+            "1",
+            2
+          ]
+        }
+      },
+      "7": {
+        "class_type": "SaveImage",
+        "inputs": {
+          "images": [
+            "6",
+            0
+          ],
+          "filename_prefix": "trellis2_trial/reference"
+        }
+      }
+    },
+    {
+      "client_id": "shortpilot-trellis2-trial",
+      "create_time": 1792921428276
+    },
+    [
+      "7"
+    ]
+  ],
+  "outputs": {
+    "7": {
+      "images": [
+        {
+          "filename": "reference_00001_.png",
+          "subfolder": "trellis2_trial",
+          "type": "output"
+        }
+      ]
+    }
+  },
+  "status": {
+    "status_str": "success",
+    "completed": true,
+    "messages": [
+      [
+        "execution_start",
+        {
+          "prompt_id": "6886f6e5-d0bc-4053-a4f7-ee59ef9327dc",
+          "timestamp": 1792921428278
+        }
+      ],
+      [
+        "execution_cached",
+        {
+          "nodes": [],
+          "prompt_id": "6886f6e5-d0bc-4053-a4f7-ee59ef9327dc",
+          "timestamp": 1792921428280
+        }
+      ],
+      [
+        "execution_success",
+        {
+          "prompt_id": "6886f6e5-d0bc-4053-a4f7-ee59ef9327dc",
+          "timestamp": 1792921467692
+        }
+      ]
+    ]
+  },
+  "meta": {
+    "7": {
+      "node_id": "7",
+      "display_node": "7",
+      "parent_node": null,
+      "real_node_id": "7"
+    }
+  }
+}
